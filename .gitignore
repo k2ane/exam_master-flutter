@@ -1,0 +1,103 @@
+# =========================
+# Miscellaneous / OS
+# =========================
+.DS_Store
+.thumb
+Thumbs.db
+*~
+
+# =========================
+# Dart / Flutter Core
+# =========================
+# Flutter/Dart build artifacts
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+build/
+
+# =========================
+# Android
+# =========================
+# Gradle cache & build artifacts
+android/.gradle/
+android/captures/
+android/gradlew
+android/gradlew.bat
+android/local.properties
+android/**/generated/
+android/**/build/
+android/app/release/
+android/app/debug/
+# Keystores (Never commit your upload keys!)
+*.jks
+*.keystore
+*.key
+key.properties
+
+# =========================
+# iOS
+# =========================
+ios/*.mode1v3
+ios/*.mode2v3
+ios/*.moved-aside
+ios/*.pbxuser
+ios/*.perspectivev3
+ios/*.iduser
+ios/default.mode1v3
+ios/default.mode2v3
+ios/default.perspectivev3
+ios/osid
+ios/DerivedData/
+ios/Runner/Assets.xcassets/AppIcon.appiconset/Contents.json
+ios/Runner/GeneratedPluginRegistrant.*
+ios/.symlinks/
+# CocoaPods (Optional: commit Podfile.lock, but ignore Pods folder to save space)
+ios/Pods/
+ios/Podfile.lock
+
+# =========================
+# Web
+# =========================
+lib/generated_plugin_registrant.dart
+
+# =========================
+# Desktop (Windows / Linux / macOS)
+# =========================
+# Windows
+windows/flutter/ephemeral/
+windows/runner/resources/
+# Linux
+linux/flutter/ephemeral/
+# macOS Desktop
+macos/Flutter/ephemeral/
+macos/Runner/Assets.xcassets/AppIcon.appiconset/Contents.json
+macos/Runner/GeneratedPluginRegistrant.*
+macos/Pods/
+macos/Podfile.lock
+
+# =========================
+# IDEs / Editors
+# =========================
+# VS Code
+.vscode/
+# IntelliJ / Android Studio
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# =========================
+# Exceptions / Keepers
+# =========================
+# Keep pubspec.lock (It ensures everyone uses the same package versions)
+!pubspec.lock
+
+# =========================
+# Environment Variables & Secrets
+# =========================
+.env
+.env.production
+.env.development

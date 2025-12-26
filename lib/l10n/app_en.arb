@@ -1,0 +1,12 @@
+{
+  "appTitle": "Exam Master",
+  "loginTitle": "User Login",
+  "welcomeBack": "Welcome Back",
+  "inputEmail": "Enter Email",
+  "inputPassword": "Enter Password",
+  "btnLogin": "Login Now",
+  "btnRegister": "Register",
+  "dialogLoginSuccess": "Success",
+  "dialogJumping": "Redirecting to dashboard...",
+  "loginTiitleMessage": "Welcome to use the exam system"
+}
