@@ -36,5 +36,5 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dialogJumping => 'Redirecting to dashboard...';
 
   @override
-  String get loginTiitleMessage => 'Welcome to use the exam system';
+  String get homeTitle => 'Home';
 }

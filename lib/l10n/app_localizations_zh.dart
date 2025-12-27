@@ -36,5 +36,5 @@ class AppLocalizationsZh extends AppLocalizations {
   String get dialogJumping => '正在跳转到考试系统...';
 
   @override
-  String get loginTiitleMessage => '欢迎使用该系统';
+  String get homeTitle => '首页';
 }

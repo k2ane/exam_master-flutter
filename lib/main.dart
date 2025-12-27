@@ -1,51 +1,59 @@
-import 'package:exam_master_flutter/features/auth/view/login_page.dart';
+import 'package:exam_master_flutter/core/locale/locale_provider.dart';
+import 'package:exam_master_flutter/core/widgets/responsive_layout.dart';
+import 'package:exam_master_flutter/features/auth/view/mobile/m_navigation_page.dart';
+import 'package:exam_master_flutter/features/auth/view/desktop/d_navigation_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-// ✅ 必须保留：使用刚才生成的实体文件
 import 'l10n/app_localizations.dart';
 
 void main() {
   runApp(const ProviderScope(child: ExamApp()));
 }
 
-class ExamApp extends StatelessWidget {
+class ExamApp extends ConsumerWidget {
   const ExamApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return PlatformProvider(
-      builder: (context) => PlatformApp(
-        debugShowCheckedModeBanner: false,
-        onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,
-        localizationsDelegates: const [
-          AppLocalizations.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: AppLocalizations.supportedLocales,
+  Widget build(BuildContext context, WidgetRef ref) {
+    final currentLocale = ref.watch(localeControllerProvider);
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: AppLocalizations.supportedLocales,
 
-        // 🎨 安卓主题 (Material 3)
-        material: (_, _) => MaterialAppData(
-          theme: ThemeData(
-            useMaterial3: true,
-            colorSchemeSeed: Colors.blue,
-            scaffoldBackgroundColor: const Color(0xFFF5F5F5), // 浅灰背景
+      // Material 3 统一主题
+      theme: ThemeData(
+        useMaterial3: true,
+        colorSchemeSeed: Colors.blue,
+        inputDecorationTheme: const InputDecorationTheme(
+          filled: true,
+          fillColor: Color(0xFFF3F4F6),
+          border: OutlineInputBorder(
+            borderSide: BorderSide.none,
+            borderRadius: BorderRadius.all(Radius.circular(12)),
           ),
         ),
-
-        // 🍎 iOS 主题
-        cupertino: (_, _) => CupertinoAppData(
-          theme: const CupertinoThemeData(
-            primaryColor: Colors.blue,
-            scaffoldBackgroundColor:
-                CupertinoColors.systemGroupedBackground, // iOS 标准分组背景色
+        filledButtonTheme: FilledButtonThemeData(
+          style: FilledButton.styleFrom(
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
           ),
         ),
-        home: const LoginPage(),
+      ),
+      locale: currentLocale, // 绑定当前语言
+      // 路由逻辑
+      home: ResponsiveLayout(
+        mobile: M_MainNavigationScaffold(),
+        desktop: D_MainNavigationScaffold(),
       ),
     );
   }

@@ -152,11 +152,11 @@ abstract class AppLocalizations {
   /// **'正在跳转到考试系统...'**
   String get dialogJumping;
 
-  /// No description provided for @loginTiitleMessage.
+  /// No description provided for @homeTitle.
   ///
   /// In zh, this message translates to:
-  /// **'欢迎使用该系统'**
-  String get loginTiitleMessage;
+  /// **'首页'**
+  String get homeTitle;
 }
 
 class _AppLocalizationsDelegate
