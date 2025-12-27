@@ -108,8 +108,8 @@ class ExamPage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    Wrap(
+                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
                           "2024年海关模拟考卷 - 0$index",

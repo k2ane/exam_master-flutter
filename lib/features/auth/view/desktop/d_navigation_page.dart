@@ -23,6 +23,7 @@ class _D_MainNavigationScaffoldState extends State<D_MainNavigationScaffold> {
           children: <Widget>[
             NavigationRail(
               leading: FloatingActionButton(
+                tooltip: "添加功能",
                 onPressed: () => {},
                 child: Icon(Icons.add),
               ),
