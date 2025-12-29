@@ -101,7 +101,7 @@ abstract class AppLocalizations {
   /// App的主标题
   ///
   /// In zh, this message translates to:
-  /// **'海关考试系统'**
+  /// **'Bondex训练场'**
   String get appTitle;
 
   /// No description provided for @loginTitle.

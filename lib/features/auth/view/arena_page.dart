@@ -18,7 +18,7 @@ class ArenaPage extends StatelessWidget {
             ? [
                 IconButton(
                   onPressed: () => _showRedeemCodeDialog(context: context),
-                  icon: Icon(Icons.add_circle),
+                  icon: Icon(Icons.add_circle_outline),
                 ),
               ]
             : [],
@@ -27,30 +27,75 @@ class ArenaPage extends StatelessWidget {
         child: ListView(
           padding: EdgeInsets.all(16),
           children: [
-            Text('欢迎来到竞技场, Kane'),
-
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('欢迎来到竞技场'),
+                Text('Kane', style: TextStyle(fontSize: 24, fontWeight: .w800)),
+              ],
+            ),
+            SizedBox(height: 20),
             Divider(height: 1, thickness: 1),
             SizedBox(height: 20),
             ArenaCard(
+              showProgress: true,
+              paramArgs: {"title": "进出口货物申报管理规定"},
+              pushUrl: '/detail',
+              cardBadge: "基础",
+              badgeColor: Colors.green,
               cardIcon: Icons.description_outlined,
               cardTitle: "进出口货物申报管理规定",
-              cardDescription: "在这里你可以学到关于进出口货物申报的一切基本知识",
             ),
+            SizedBox(height: 8),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
                   child: ArenaCard(
-                    cardIcon: Icons.quiz_outlined,
+                    paramArgs: {"title": "考试"},
+                    pushUrl: '/detail',
+                    cardBadge: "试炼",
+                    badgeColor: Colors.teal,
+                    cardIcon: Icons.edit_outlined,
                     cardTitle: "考试",
-                    cardDescription: "考试模块",
                   ),
                 ),
+                SizedBox(width: 8),
                 Expanded(
                   child: ArenaCard(
-                    cardIcon: Icons.assistant_outlined,
-                    cardTitle: "AI分析",
-                    cardDescription: "在这里你可以学到关于进出口货物申报的一切基本知识",
+                    paramArgs: {"title": "真题"},
+                    pushUrl: '/detail',
+                    cardBadge: "困难",
+                    badgeColor: Colors.orange,
+                    cardIcon: Icons.panorama_photosphere_outlined,
+                    cardTitle: "真题",
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 8),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: ArenaCard(
+                    paramArgs: {"title": "模拟报关"},
+                    pushUrl: '/detail',
+                    cardBadge: "工具",
+                    badgeColor: Colors.purple,
+                    cardIcon: Icons.public_outlined,
+                    cardTitle: "模拟报关",
+                  ),
+                ),
+                SizedBox(width: 8),
+                Expanded(
+                  child: ArenaCard(
+                    paramArgs: {"title": "AI助手"},
+                    pushUrl: '/detail',
+                    cardBadge: "工具",
+                    badgeColor: Colors.purple,
+                    cardIcon: Icons.auto_awesome_outlined,
+                    cardTitle: "AI助手",
                   ),
                 ),
               ],

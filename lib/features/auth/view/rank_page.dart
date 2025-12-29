@@ -15,7 +15,24 @@ class RankPage extends StatelessWidget {
           IconButton(onPressed: () => {}, icon: Icon(Icons.help_outline)),
         ],
       ),
-      body: Text('这是 排名 页面'),
+      body: Scrollbar(
+        child: ListView.builder(
+          padding: EdgeInsets.all(16),
+          itemCount: 100,
+          itemBuilder: (context, index) {
+            return Card(
+              clipBehavior: Clip.antiAlias,
+              child: ListTile(
+                leading: Icon(Icons.person),
+                title: Text('用户 $index'),
+                subtitle: Text('这是第 $index 条数据'),
+                trailing: Icon(Icons.arrow_forward_ios, size: 16),
+                onTap: () => {debugPrint("你点击了第 $index 条数据的按钮")},
+              ),
+            );
+          },
+        ),
+      ),
     );
   }
 }

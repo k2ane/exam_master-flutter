@@ -37,7 +37,7 @@ class MePage extends StatelessWidget {
             SizedBox(height: 20),
             Material(
               clipBehavior: Clip.antiAlias,
-              color: isDark ? Colors.black26 : Colors.white,
+              // color: isDark ? Colors.black26 : Colors.white,
               borderRadius: BorderRadius.circular(16),
               child: Column(
                 children: [
@@ -73,7 +73,7 @@ class MePage extends StatelessWidget {
             SizedBox(height: 30),
             Material(
               clipBehavior: Clip.antiAlias,
-              color: isDark ? Colors.black26 : Colors.white,
+              // color: isDark ? Colors.black26 : Colors.white,
               borderRadius: BorderRadius.circular(16),
               child: Column(
                 children: [
