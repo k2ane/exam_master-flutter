@@ -17,6 +17,14 @@ class ExamApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentLocale = ref.watch(localeControllerProvider);
+    final lightColorSchema = ColorScheme.fromSeed(
+      seedColor: Colors.blue, // 🌱 你的种子颜色
+      brightness: Brightness.light,
+    );
+    final darkColorSchema = ColorScheme.fromSeed(
+      seedColor: Colors.blue,
+      brightness: Brightness.dark,
+    );
     return MaterialApp(
       themeMode: ThemeMode.system,
       onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,
@@ -31,24 +39,26 @@ class ExamApp extends ConsumerWidget {
       // Material 3 统一主题
       theme: ThemeData(
         useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.green,
-          brightness: Brightness.light,
+        colorScheme: lightColorSchema,
+        scaffoldBackgroundColor: lightColorSchema.surfaceContainerHigh,
+        appBarTheme: AppBarTheme(
+          backgroundColor: lightColorSchema.surfaceContainerHigh,
         ),
       ),
       //深色主题配置
       darkTheme: ThemeData(
         useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.green,
-          brightness: Brightness.dark,
+        colorScheme: darkColorSchema,
+        scaffoldBackgroundColor: darkColorSchema.surfaceContainerHigh,
+        appBarTheme: AppBarTheme(
+          backgroundColor: darkColorSchema.surfaceContainerHigh,
         ),
       ),
       locale: currentLocale, // 绑定当前语言
       // 路由逻辑
       home: ResponsiveLayout(
-        mobile: M_MainNavigationScaffold(),
-        desktop: D_MainNavigationScaffold(),
+        mobile: MMainNavigationScaffold(),
+        desktop: DMainNavigationScaffold(),
       ),
     );
   }

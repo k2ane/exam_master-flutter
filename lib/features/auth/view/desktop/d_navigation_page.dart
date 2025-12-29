@@ -1,17 +1,18 @@
-import 'package:exam_master_flutter/features/auth/view/exam_page.dart';
+import 'package:exam_master_flutter/features/auth/view/arena_page.dart';
+import 'package:exam_master_flutter/features/auth/view/me_page.dart';
+import 'package:exam_master_flutter/features/auth/view/rank_page.dart';
 import 'package:exam_master_flutter/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
-import '../placeholder_page.dart';
 
-class D_MainNavigationScaffold extends StatefulWidget {
-  const D_MainNavigationScaffold({super.key});
+class DMainNavigationScaffold extends StatefulWidget {
+  const DMainNavigationScaffold({super.key});
 
   @override
-  State<D_MainNavigationScaffold> createState() =>
-      _D_MainNavigationScaffoldState();
+  State<DMainNavigationScaffold> createState() =>
+      _DMainNavigationScaffoldState();
 }
 
-class _D_MainNavigationScaffoldState extends State<D_MainNavigationScaffold> {
+class _DMainNavigationScaffoldState extends State<DMainNavigationScaffold> {
   int _selectIndex = 0;
 
   @override
@@ -24,7 +25,7 @@ class _D_MainNavigationScaffoldState extends State<D_MainNavigationScaffold> {
             NavigationRail(
               leading: FloatingActionButton(
                 tooltip: "添加功能",
-                onPressed: () => {},
+                onPressed: () => _showRedeemCodeDialog(context: context),
                 child: Icon(Icons.add),
               ),
               groupAlignment: -1.0,
@@ -54,21 +55,14 @@ class _D_MainNavigationScaffoldState extends State<D_MainNavigationScaffold> {
                   selectedIcon: Icon(Icons.person),
                   label: Text('我'),
                 ),
-                NavigationRailDestination(
-                  padding: EdgeInsets.only(top: 15),
-                  icon: Icon(Icons.info_outline),
-                  selectedIcon: Icon(Icons.info),
-                  label: Text('关于'),
-                ),
               ],
             ),
             VerticalDivider(thickness: 1, width: 1),
             Expanded(
               child: <Widget>[
-                ExamPage(),
-                PlaceholderPage(title: '排行', icon: Icons.abc),
-                PlaceholderPage(title: '我', icon: Icons.abc),
-                PlaceholderPage(title: '关于系统', icon: Icons.abc),
+                ArenaPage(isShowButton: false),
+                RankPage(),
+                MePage(),
               ][_selectIndex],
             ),
             // Column(children: <Widget>[Text('selectedIndex: $_selectIndex')]),
@@ -77,4 +71,43 @@ class _D_MainNavigationScaffoldState extends State<D_MainNavigationScaffold> {
       ),
     );
   }
+}
+
+Future<void> _showRedeemCodeDialog({required BuildContext context}) {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: false, // user must tap button!
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text('激活题库'),
+        content: const SingleChildScrollView(
+          child: ListBody(
+            children: [
+              TextField(
+                obscureText: true,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: "兑换码",
+                ),
+              ),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: const Text('取消'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          TextButton(
+            child: const Text('兑换'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
 }

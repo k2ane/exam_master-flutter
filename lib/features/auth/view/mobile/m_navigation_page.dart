@@ -1,17 +1,18 @@
-import 'package:exam_master_flutter/features/auth/view/exam_page.dart';
+import 'package:exam_master_flutter/features/auth/view/arena_page.dart';
+import 'package:exam_master_flutter/features/auth/view/me_page.dart';
+import 'package:exam_master_flutter/features/auth/view/rank_page.dart';
 import 'package:exam_master_flutter/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
-import '../placeholder_page.dart';
 
-class M_MainNavigationScaffold extends StatefulWidget {
-  const M_MainNavigationScaffold({super.key});
+class MMainNavigationScaffold extends StatefulWidget {
+  const MMainNavigationScaffold({super.key});
 
   @override
-  State<M_MainNavigationScaffold> createState() =>
-      _M_MainNavigationScaffoldState();
+  State<MMainNavigationScaffold> createState() =>
+      _MMainNavigationScaffoldState();
 }
 
-class _M_MainNavigationScaffoldState extends State<M_MainNavigationScaffold> {
+class _MMainNavigationScaffoldState extends State<MMainNavigationScaffold> {
   int _selectIndex = 0;
 
   @override
@@ -41,19 +42,9 @@ class _M_MainNavigationScaffoldState extends State<M_MainNavigationScaffold> {
             icon: Icon(Icons.person_outline),
             label: "我",
           ),
-          NavigationDestination(
-            selectedIcon: Icon(Icons.info_outline),
-            icon: Icon(Icons.info),
-            label: "关于",
-          ),
         ],
       ),
-      body: <Widget>[
-        ExamPage(),
-        PlaceholderPage(title: '排行', icon: Icons.leaderboard),
-        PlaceholderPage(title: '我', icon: Icons.person),
-        PlaceholderPage(title: '关于', icon: Icons.info),
-      ][_selectIndex],
+      body: <Widget>[ArenaPage(), RankPage(), MePage()][_selectIndex],
     );
   }
 }
