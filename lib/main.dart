@@ -1,8 +1,6 @@
+import 'package:exam_master_flutter/core/http/http_client.dart';
 import 'package:exam_master_flutter/core/locale/locale_provider.dart';
-import 'package:exam_master_flutter/core/widgets/responsive_layout.dart';
-import 'package:exam_master_flutter/features/auth/view/me_page.dart';
-import 'package:exam_master_flutter/features/auth/view/mobile/m_navigation_page.dart';
-import 'package:exam_master_flutter/features/auth/view/desktop/d_navigation_page.dart';
+import 'package:exam_master_flutter/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -26,17 +24,10 @@ class ExamApp extends ConsumerWidget {
       seedColor: Colors.blue,
       brightness: Brightness.dark,
     );
-    return MaterialApp(
+    final goRouter = ref.watch(routerProvider);
+    return MaterialApp.router(
       title: "Bondex训练场",
-      initialRoute: '/home',
-      routes: {
-        '/home': (context) => const ResponsiveLayout(
-          mobile: MMainNavigationScaffold(),
-          desktop: DMainNavigationScaffold(),
-        ),
-        '/me': (context) => const MePage(),
-        '/detail': (context) => const DetailsScreen(),
-      },
+      routerConfig: goRouter,
       themeMode: ThemeMode.system,
       onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,
       localizationsDelegates: const [
@@ -66,11 +57,6 @@ class ExamApp extends ConsumerWidget {
         ),
       ),
       locale: currentLocale, // 绑定当前语言
-      // 路由逻辑
-      // home: ResponsiveLayout(
-      //   mobile: MMainNavigationScaffold(),
-      //   desktop: DMainNavigationScaffold(),
-      // ),
     );
   }
 }
@@ -83,6 +69,13 @@ class DetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as Map;
     final String title = args['title'];
+    void loadData() async {
+      try {
+        final res = await HttpClient().get('/');
+      } catch (e) {
+        debugPrint("错误: ${e}");
+      }
+    }
 
     return PopScope(
       canPop: false,
@@ -100,14 +93,7 @@ class DetailsScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(title: Text(title)),
         body: Center(
-          child: ElevatedButton(
-            onPressed: () => Navigator.pushNamedAndRemoveUntil(
-              context,
-              '/home',
-              (route) => false,
-            ),
-            child: const Text('测试按钮'),
-          ),
+          child: ElevatedButton(onPressed: loadData, child: const Text('测试按钮')),
         ),
       ),
     );
