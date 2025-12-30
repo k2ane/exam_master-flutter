@@ -1,4 +1,4 @@
-import 'package:exam_master_flutter/core/widgets/label_divider.dart';
+import 'package:exam_master_flutter/views/widgets/label_divider.dart';
 import 'package:flutter/material.dart';
 
 class MePage extends StatelessWidget {

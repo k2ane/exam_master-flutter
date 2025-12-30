@@ -1,12 +1,11 @@
 // lib/router.dart
-import 'package:exam_master_flutter/core/widgets/responsive_layout.dart';
-import 'package:exam_master_flutter/features/auth/logic/auth_controller.dart';
-import 'package:exam_master_flutter/features/auth/view/desktop/d_navigation_page.dart';
-import 'package:exam_master_flutter/features/auth/view/login_page.dart';
-import 'package:exam_master_flutter/features/auth/view/me_page.dart';
-import 'package:exam_master_flutter/features/auth/view/mobile/m_navigation_page.dart';
-import 'package:exam_master_flutter/features/auth/view/otp_page.dart';
-import 'package:exam_master_flutter/main.dart';
+import 'package:exam_master_flutter/views/widgets/responsive_layout.dart';
+import 'package:exam_master_flutter/providers/auth_provider.dart';
+import 'package:exam_master_flutter/views/desktop/d_navigation_page.dart';
+import 'package:exam_master_flutter/views/shared/login_page.dart';
+import 'package:exam_master_flutter/views/shared/me_page.dart';
+import 'package:exam_master_flutter/views/mobile/m_navigation_page.dart';
+import 'package:exam_master_flutter/views/shared/otp_page.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -20,12 +19,12 @@ final routerProvider = Provider<GoRouter>((ref) {
     redirect: (context, state) {
       final isGoingToLogin = state.matchedLocation.startsWith('/login');
 
-      // 🔒 情况 A：没登录，且没在登录相关页面 -> 踢去登录页
+      // 🔒 没登录，且没在登录相关页面 -> 踢去登录页
       if (!isLoggedIn && !isGoingToLogin) {
         return '/login';
       }
 
-      // 2. ✅ 新增：OTP 页面专属守卫
+      // 🔒 OTP 页面专属守卫
       if (state.matchedLocation == '/login/otp') {
         // 检查身上有没有带信物 (extra)
         if (state.extra == null) {
@@ -34,7 +33,7 @@ final routerProvider = Provider<GoRouter>((ref) {
         }
       }
 
-      // 🔓 情况 B：已登录，但还在登录页 -> 踢回首页
+      // 🔓 已登录，但还在登录页 -> 踢回首页
       if (isLoggedIn && isGoingToLogin) {
         return '/home';
       }
@@ -43,7 +42,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       return null;
     },
 
-    // 3. 定义路由表 (替换掉你原来的 routes Map)
+    // 3. 定义路由表
     routes: [
       GoRoute(
         path: '/login',
@@ -67,10 +66,6 @@ final routerProvider = Provider<GoRouter>((ref) {
         ),
       ),
       GoRoute(path: '/me', builder: (context, state) => const MePage()),
-      GoRoute(
-        path: '/detail',
-        builder: (context, state) => const DetailsScreen(),
-      ),
     ],
   );
 });

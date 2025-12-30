@@ -50,7 +50,7 @@ class _LoginPageState extends State<LoginPage> {
                     return null;
                   },
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  keyboardType: TextInputType.name,
+                  keyboardType: TextInputType.emailAddress,
                   // maxLength: 255,
                   autofocus: true,
                   decoration: const InputDecoration(

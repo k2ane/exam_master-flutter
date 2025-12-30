@@ -1,6 +1,6 @@
-import 'package:exam_master_flutter/features/auth/view/arena_page.dart';
-import 'package:exam_master_flutter/features/auth/view/me_page.dart';
-import 'package:exam_master_flutter/features/auth/view/rank_page.dart';
+import 'package:exam_master_flutter/views/shared/arena_page.dart';
+import 'package:exam_master_flutter/views/shared/me_page.dart';
+import 'package:exam_master_flutter/views/shared/rank_page.dart';
 import 'package:exam_master_flutter/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 

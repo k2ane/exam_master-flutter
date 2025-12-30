@@ -1,4 +1,4 @@
-import 'package:exam_master_flutter/core/widgets/arena_card.dart';
+import 'package:exam_master_flutter/views/widgets/arena_card.dart';
 import 'package:flutter/material.dart';
 
 class ArenaPage extends StatelessWidget {
