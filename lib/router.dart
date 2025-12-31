@@ -1,11 +1,11 @@
-// lib/router.dart
+import 'package:exam_master_flutter/providers/login_state_provider.dart';
 import 'package:exam_master_flutter/views/widgets/responsive_layout.dart';
 import 'package:exam_master_flutter/providers/auth_provider.dart';
 import 'package:exam_master_flutter/views/desktop/d_navigation_page.dart';
 import 'package:exam_master_flutter/views/shared/login_page.dart';
 import 'package:exam_master_flutter/views/shared/me_page.dart';
 import 'package:exam_master_flutter/views/mobile/m_navigation_page.dart';
-import 'package:exam_master_flutter/views/shared/otp_page.dart';
+import 'package:exam_master_flutter/views/widgets/otp_widget.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -18,7 +18,7 @@ final routerProvider = Provider<GoRouter>((ref) {
     // 2. 核心鉴权逻辑：每次路由跳转前都会经过这里
     redirect: (context, state) {
       final isGoingToLogin = state.matchedLocation.startsWith('/login');
-
+      final email = ref.read(loginEmailProvider);
       // 🔒 没登录，且没在登录相关页面 -> 踢去登录页
       if (!isLoggedIn && !isGoingToLogin) {
         return '/login';
@@ -27,7 +27,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       // 🔒 OTP 页面专属守卫
       if (state.matchedLocation == '/login/otp') {
         // 检查身上有没有带信物 (extra)
-        if (state.extra == null) {
+        if (email == "" || email.isEmpty) {
           // 没带信物？说明是直接偷渡过来的，踢回登录页重填
           return '/login';
         }
@@ -48,13 +48,7 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/login',
         builder: (context, state) => const LoginPage(),
         routes: [
-          GoRoute(
-            path: '/otp',
-            builder: (context, state) {
-              final email = state.extra as String?;
-              return OtpPage(email: email ?? "");
-            },
-          ),
+          GoRoute(path: '/otp', builder: (context, state) => const OtpWidget()),
         ],
       ),
 

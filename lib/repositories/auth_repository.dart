@@ -12,13 +12,27 @@ class AuthRepository {
   final HttpClient _client;
   AuthRepository(this._client);
 
-  // 使用账号密码登录
-  Future<LoginResponse> login(String email, String password) async {
+  // 使用邮箱验证码登录
+  Future<LoginResponse> login(String email, String passcode) async {
     final response = await _client.post(
       '/auth/login',
-      data: {'email': email, 'password': password},
+      data: {'email': email, 'passcode': passcode},
     );
 
     return LoginResponse.fromJson(response);
+  }
+
+  // 使用邮箱注册
+  Future<RegisterResponse> register(
+    String email,
+    String name,
+    String passcode,
+  ) async {
+    final response = await _client.post(
+      '/auth/login',
+      data: {'email': email, 'name': name, 'passcode': passcode},
+    );
+
+    return RegisterResponse.fromJson(response);
   }
 }
