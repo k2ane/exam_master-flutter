@@ -1,5 +1,5 @@
 {
-  "appTitle": "Exam Master",
+  "appTitle": "Bondex Arena",
   "loginTitle": "User Login",
   "welcomeBack": "Welcome Back",
   "inputEmail": "Enter Email",
@@ -8,5 +8,5 @@
   "btnRegister": "Register",
   "dialogLoginSuccess": "Success",
   "dialogJumping": "Redirecting to dashboard...",
-  "loginTiitleMessage": "Welcome to use the exam system"
+  "homeTitle": "Home"
 }

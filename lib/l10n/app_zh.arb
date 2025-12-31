@@ -1,5 +1,5 @@
 {
-  "appTitle": "海关考试系统",
+  "appTitle": "Bondex训练场",
   "@appTitle": {
     "description": "App的主标题"
   },
@@ -11,5 +11,5 @@
   "btnRegister": "注册新账号",
   "dialogLoginSuccess": "登录成功",
   "dialogJumping": "正在跳转到考试系统...",
-  "loginTiitleMessage": "欢迎使用该系统"
+  "homeTitle": "首页"
 }

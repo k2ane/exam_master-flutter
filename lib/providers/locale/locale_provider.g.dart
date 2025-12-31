@@ -1,26 +1,26 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'login_controller.dart';
+part of 'locale_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$loginControllerHash() => r'03a336209ff613985d17338f6c3ecb010a8d746f';
+String _$localeControllerHash() => r'34b01b8106978f159220602db77af5e65e05a7bf';
 
-/// See also [LoginController].
-@ProviderFor(LoginController)
-final loginControllerProvider =
-    AutoDisposeAsyncNotifierProvider<LoginController, void>.internal(
-      LoginController.new,
-      name: r'loginControllerProvider',
+/// See also [LocaleController].
+@ProviderFor(LocaleController)
+final localeControllerProvider =
+    AutoDisposeNotifierProvider<LocaleController, Locale>.internal(
+      LocaleController.new,
+      name: r'localeControllerProvider',
       debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
           ? null
-          : _$loginControllerHash,
+          : _$localeControllerHash,
       dependencies: null,
       allTransitiveDependencies: null,
     );
 
-typedef _$LoginController = AutoDisposeAsyncNotifier<void>;
+typedef _$LocaleController = AutoDisposeNotifier<Locale>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

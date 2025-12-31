@@ -9,7 +9,7 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get appTitle => 'Exam Master';
+  String get appTitle => 'Bondex Arena';
 
   @override
   String get loginTitle => 'User Login';
@@ -36,5 +36,5 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dialogJumping => 'Redirecting to dashboard...';
 
   @override
-  String get loginTiitleMessage => 'Welcome to use the exam system';
+  String get homeTitle => 'Home';
 }
