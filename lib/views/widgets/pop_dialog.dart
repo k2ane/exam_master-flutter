@@ -6,6 +6,7 @@ Future<void> showMyDialog(
   Widget widget,
 ) async {
   return showDialog<void>(
+    // barrierColor: Colors.black.withAlpha(210),
     context: context,
     barrierDismissible: false, // user must tap button!
     builder: (BuildContext context) {

@@ -6,7 +6,7 @@ class OtpWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // final email = ref.watch(loginEmailProvider);
-
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Column(
       crossAxisAlignment: .start,
       children: [
@@ -24,13 +24,19 @@ class OtpWidget extends ConsumerWidget {
           children: [
             Text(
               '*请输入发送至的6位数字验证码',
-              style: TextStyle(color: Colors.black38, fontSize: 12),
+              style: TextStyle(
+                color: isDark ? Colors.white38 : Colors.black38,
+                fontSize: 12,
+              ),
             ),
-            SizedBox(height: 4),
-            Text(
-              '没收到验证码? 59 秒后可重试',
-              style: TextStyle(color: Colors.black87, fontSize: 12),
-            ),
+            // SizedBox(height: 4),
+            // Text(
+            //   '没收到验证码? 59 秒后可重试',
+            //   style: TextStyle(
+            //     color: isDark ? Colors.white70 : Colors.black87,
+            //     fontSize: 12,
+            //   ),
+            // ),
           ],
         ),
       ],
