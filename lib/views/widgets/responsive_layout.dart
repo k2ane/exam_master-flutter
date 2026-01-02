@@ -1,28 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ResponsiveLayout extends StatelessWidget {
-  final Widget mobile;
+class ResponsiveLayout extends ConsumerWidget {
+  // 手机视图
+  final Widget phone;
+  // 桌面视图
   final Widget desktop;
-  final Widget? table; // 可选平板布局
+  // 平板视图
+  final Widget? pad;
 
   const ResponsiveLayout({
     super.key,
-    required this.mobile,
+    required this.phone,
     required this.desktop,
-    this.table,
+    this.pad,
   });
 
-  static const int mobileBreakpoint = 600;
-
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        if (constraints.maxWidth < mobileBreakpoint) {
-          return mobile;
-        } else {
-          return desktop;
-        }
+        // 如果页面最大宽度小于 600 就认为设备是手机, 大于 600 认为设备为桌面
+        return constraints.maxWidth < 600 ? phone : desktop;
       },
     );
   }
