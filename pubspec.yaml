@@ -23,6 +23,8 @@ dependencies:
   dio: ^5.9.0
   # 安全存储用户 token
   flutter_secure_storage: ^10.0.0
+  # 加载动画
+  flutter_easyloading: ^3.0.5
 
 dev_dependencies:
   flutter_test:

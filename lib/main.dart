@@ -1,5 +1,6 @@
 import 'package:exam_master_flutter/router.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 // ignore: depend_on_referenced_packages
 import 'package:flutter_web_plugins/url_strategy.dart';
@@ -45,6 +46,7 @@ class ExamApp extends ConsumerWidget {
           backgroundColor: darkColorSchema.surfaceContainerHigh,
         ),
       ),
+      builder: EasyLoading.init(),
     );
   }
 }

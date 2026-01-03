@@ -15,7 +15,7 @@ class AppbarWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
-      padding: EdgeInsetsGeometry.only(top: 16.0, bottom: 24),
+      padding: EdgeInsetsGeometry.only(top: 48.0, bottom: 24),
       child: showBackButton != null && showBackButton == false
           ? Column(
               crossAxisAlignment: CrossAxisAlignment.start,

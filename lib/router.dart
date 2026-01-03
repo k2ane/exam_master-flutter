@@ -1,3 +1,4 @@
+import 'package:exam_master_flutter/providers/global_email_provider.dart';
 import 'package:exam_master_flutter/views/example_view.dart';
 import 'package:exam_master_flutter/views/login_view.dart';
 import 'package:exam_master_flutter/views/verification_view.dart';
@@ -12,6 +13,9 @@ final routerProvider = Provider<GoRouter>((ref) {
     initialLocation: '/login', // 默认路由页面
     // 重定向, 每次路由都会经过这里
     redirect: (context, state) {
+      if (ref.read(globalEmailProvider).isEmpty) {
+        return '/login';
+      }
       return null;
     },
 
