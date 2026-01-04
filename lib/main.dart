@@ -1,11 +1,12 @@
-import 'package:exam_master_flutter/providers/locale/locale_provider.dart';
 import 'package:exam_master_flutter/router.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'l10n/app_localizations.dart';
+// ignore: depend_on_referenced_packages
+import 'package:flutter_web_plugins/url_strategy.dart';
 
 void main() {
+  usePathUrlStrategy();
   runApp(const ProviderScope(child: ExamApp()));
 }
 
@@ -14,29 +15,19 @@ class ExamApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentLocale = ref.watch(localeControllerProvider);
     final lightColorSchema = ColorScheme.fromSeed(
-      seedColor: Colors.purple, // 🌱 你的种子颜色
+      seedColor: Colors.orange, // 🌱 你的种子颜色
       brightness: Brightness.light,
     );
     final darkColorSchema = ColorScheme.fromSeed(
-      seedColor: Colors.purple,
+      seedColor: Colors.orange,
       brightness: Brightness.dark,
     );
     final goRouter = ref.watch(routerProvider);
     return MaterialApp.router(
-      title: "Bondex训练场",
+      title: 'Bondex 训练场',
       routerConfig: goRouter,
       themeMode: ThemeMode.system,
-      onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: AppLocalizations.supportedLocales,
-
       // Material 3 统一主题
       theme: ThemeData(
         useMaterial3: true,
@@ -55,7 +46,7 @@ class ExamApp extends ConsumerWidget {
           backgroundColor: darkColorSchema.surfaceContainerHigh,
         ),
       ),
-      locale: currentLocale, // 绑定当前语言
+      builder: EasyLoading.init(),
     );
   }
 }

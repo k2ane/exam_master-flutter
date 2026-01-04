@@ -1,27 +1,31 @@
-class LoginResponse {
-  final String token;
-  final String userId;
-  // 根据后端返回实际字符端添加
-  LoginResponse({required this.token, required this.userId});
-
-  factory LoginResponse.fromJson(Map<String, dynamic> json) {
-    return LoginResponse(
-      // 根据实际后端字段修购
-      token: json['token'] ?? '',
-      userId: json['user']['id'] ?? '',
+class EmailResponse {
+  final String status;
+  final String message;
+  EmailResponse({required this.status, required this.message});
+  factory EmailResponse.fromJson(Map<String, dynamic> json) {
+    return EmailResponse(
+      status: json['status'] as String,
+      message: json['message'] as String,
     );
+  }
+  Map<String, dynamic> toJson() {
+    return {'status': status, 'message': message};
   }
 }
 
-class RegisterResponse {
+class LoginResponse {
+  final int statusCode;
   final String token;
-  final String userId;
-  RegisterResponse({required this.token, required this.userId});
+  LoginResponse({required this.statusCode, required this.token});
 
-  factory RegisterResponse.fromJson(Map<String, dynamic> json) {
-    return RegisterResponse(
-      token: json['token'] ?? '',
-      userId: json['user']['id'] ?? '',
+  factory LoginResponse.fromJson(Map<String, dynamic> json) {
+    return LoginResponse(
+      statusCode: json['statusCode'] as int,
+      token: json['token'] as String,
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {'statusCode': statusCode, 'toekn': token};
   }
 }
