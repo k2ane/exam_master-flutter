@@ -6,11 +6,13 @@ class AppbarWidget extends ConsumerWidget {
   final String viewTitle;
   final String? viewSubTitle;
   final bool? showBackButton;
+  final List<Widget>? actions;
   const AppbarWidget({
     super.key,
     required this.viewTitle,
     required this.viewSubTitle,
     this.showBackButton = false,
+    this.actions,
   });
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -22,11 +24,23 @@ class AppbarWidget extends ConsumerWidget {
               children: [
                 Text(
                   viewTitle,
-                  style: TextStyle(fontSize: 36.0, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontSize: 36.0,
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
                 ),
                 SizedBox(height: 8.0),
                 viewSubTitle != null
-                    ? Text(viewSubTitle!, style: TextStyle(fontSize: 13))
+                    ? Text(
+                        viewSubTitle!,
+                        style: TextStyle(
+                          fontSize: 13,
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.secondary.withAlpha(200),
+                        ),
+                      )
                     : const SizedBox.shrink(),
               ],
             )

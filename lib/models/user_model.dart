@@ -14,18 +14,18 @@ class EmailResponse {
 }
 
 class LoginResponse {
-  final int statusCode;
+  final String status;
   final String token;
-  LoginResponse({required this.statusCode, required this.token});
+  LoginResponse({required this.status, required this.token});
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) {
     return LoginResponse(
-      statusCode: json['statusCode'] as int,
+      status: json['status'] as String,
       token: json['token'] as String,
     );
   }
 
   Map<String, dynamic> toJson() {
-    return {'statusCode': statusCode, 'toekn': token};
+    return {'status': status, 'token': token};
   }
 }

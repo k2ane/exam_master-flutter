@@ -11,7 +11,8 @@ final httpClientProvider = Provider<DioClient>((ref) {
 final dioProvider = Provider<Dio>((ref) {
   // Dio配置
   final options = BaseOptions(
-    baseUrl: 'http://localhost:3000/api/v1',
+    // 特殊配置安卓模拟器访问本地localhost地址 10.0.2.2
+    baseUrl: 'http://10.0.2.2:3000/api/v1',
     connectTimeout: Duration(seconds: 10),
     receiveTimeout: Duration(seconds: 10),
     contentType: Headers.jsonContentType,
@@ -30,10 +31,12 @@ final dioProvider = Provider<Dio>((ref) {
   return dio;
 });
 
+// 错误信息定义
 class ApiException implements Exception {
+  final String status;
   final String message;
-  final int? code;
-  ApiException(this.message, {this.code});
+  ApiException(this.status, this.message);
+
   @override
   String toString() => message;
 }
@@ -77,7 +80,7 @@ class DioClient {
         final stateCode = e.response?.statusCode;
         final errorData = e.response?.data;
         if (stateCode == 401) {
-          return ApiException('未授权或登录过期', code: 401);
+          return ApiException('error', '未授权或登录过期');
         }
         // 读取后端返回的错误信息
         if (errorData is Map && errorData['message'] != null) {
@@ -92,6 +95,6 @@ class DioClient {
       default:
         errorDescription = '未知错误， 请重试';
     }
-    return ApiException(errorDescription, code: e.response?.statusCode);
+    return ApiException("error", errorDescription);
   }
 }
