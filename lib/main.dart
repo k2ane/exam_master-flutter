@@ -62,6 +62,7 @@ class ExamApp extends ConsumerWidget {
         ),
       ),
       builder: EasyLoading.init(),
+      locale: const Locale('zh', 'CN'),
     );
   }
 }

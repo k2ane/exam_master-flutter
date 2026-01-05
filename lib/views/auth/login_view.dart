@@ -24,7 +24,7 @@ class _LoginView extends ConsumerState<LoginView> {
   Widget build(BuildContext context) {
     return AppcontainerWidget(
       viewTitle: '登录',
-      viewSubTitle: '以继续使用 Bondex 训练场',
+      viewSubTitle: '我们需要验证您的身份以继续',
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

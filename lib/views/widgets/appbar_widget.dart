@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 class AppbarWidget extends ConsumerWidget {
-  final String viewTitle;
+  final String? viewTitle;
   final String? viewSubTitle;
   final bool? showBackButton;
   final List<Widget>? actions;
@@ -18,12 +18,12 @@ class AppbarWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
       padding: EdgeInsetsGeometry.only(top: 48.0, bottom: 24),
-      child: showBackButton != null && showBackButton == false
+      child: showBackButton == false
           ? Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  viewTitle,
+                  viewTitle ?? '未提供',
                   style: TextStyle(
                     fontSize: 36.0,
                     fontWeight: FontWeight.bold,
@@ -52,7 +52,7 @@ class AppbarWidget extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      viewTitle,
+                      viewTitle ?? '未提供',
                       style: TextStyle(
                         fontSize: 36.0,
                         fontWeight: FontWeight.bold,

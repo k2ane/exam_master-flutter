@@ -76,6 +76,7 @@ class _VerificationView extends ConsumerState<VerificationView> {
   Widget build(BuildContext context) {
     final email = ref.read(globalEmailProvider);
     return AppcontainerWidget(
+      isMainView: false,
       viewTitle: '验证',
       viewSubTitle: !fristClicked
           ? '请输入发送至 @${email.split('@')[1]} 的验证码'
@@ -112,7 +113,15 @@ class _VerificationView extends ConsumerState<VerificationView> {
                                 if (!context.mounted) return;
                                 ScaffoldMessenger.of(context).clearSnackBars();
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text(response.message)),
+                                  SnackBar(
+                                    content: Text(
+                                      response.message,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    backgroundColor: Colors.green.shade600,
+                                  ),
                                 );
                               }
                             } catch (e) {
@@ -120,9 +129,17 @@ class _VerificationView extends ConsumerState<VerificationView> {
                               debugPrint('发送错误: $e');
                               if (!context.mounted) return;
                               ScaffoldMessenger.of(context).clearSnackBars();
-                              ScaffoldMessenger.of(
-                                context,
-                              ).showSnackBar(SnackBar(content: Text('$e')));
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    '$e',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  backgroundColor: Colors.red.shade600,
+                                ),
+                              );
                             }
                           },
                     child: Text(
@@ -151,25 +168,43 @@ class _VerificationView extends ConsumerState<VerificationView> {
                   if (!context.mounted) return;
                   // 显示成功提示
                   ScaffoldMessenger.of(context).clearSnackBars();
-                  ScaffoldMessenger.of(
-                    context,
-                  ).showSnackBar(SnackBar(content: Text('登录成功')));
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        '登录成功',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      backgroundColor: Colors.green.shade600,
+                    ),
+                  );
                   // 将用户转到首页
                   context.push('/home');
                 } else {
                   // 返回失败消息
                   if (!context.mounted) return;
                   ScaffoldMessenger.of(context).clearSnackBars();
-                  ScaffoldMessenger.of(
-                    context,
-                  ).showSnackBar(SnackBar(content: Text('登录失败')));
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        '登录失败',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      backgroundColor: Colors.red.shade600,
+                    ),
+                  );
                 }
               } catch (e) {
                 if (!context.mounted) return;
                 ScaffoldMessenger.of(context).clearSnackBars();
-                ScaffoldMessenger.of(
-                  context,
-                ).showSnackBar(SnackBar(content: Text('$e')));
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      '$e',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    backgroundColor: Colors.red,
+                  ),
+                );
               }
             },
             child: Text('验证'),

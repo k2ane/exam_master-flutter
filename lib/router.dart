@@ -1,5 +1,6 @@
 import 'package:exam_master_flutter/providers/auth_state_provider.dart';
 import 'package:exam_master_flutter/providers/global_email_provider.dart';
+import 'package:exam_master_flutter/utils/app_transitions.dart';
 import 'package:exam_master_flutter/views/example_view.dart';
 import 'package:exam_master_flutter/views/auth/login_view.dart';
 import 'package:exam_master_flutter/views/auth/verification_view.dart';
@@ -44,7 +45,8 @@ final routerProvider = Provider<GoRouter>((ref) {
     routes: [
       GoRoute(
         path: '/login',
-        builder: (context, state) => const LoginView(),
+        pageBuilder: (context, state) =>
+            AppTransitions.slideUp(state, const LoginView()),
         routes: [
           GoRoute(
             path: '/verification',
@@ -55,8 +57,10 @@ final routerProvider = Provider<GoRouter>((ref) {
 
       GoRoute(
         path: '/',
-        builder: (context, state) =>
-            ResponsiveLayout(phone: PhoneLayout(), desktop: DesktopLayout()),
+        pageBuilder: (context, state) => AppTransitions.slideUp(
+          state,
+          ResponsiveLayout(phone: PhoneLayout(), desktop: DesktopLayout()),
+        ),
       ),
       GoRoute(
         path: '/profile',

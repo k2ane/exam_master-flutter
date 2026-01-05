@@ -12,8 +12,6 @@ class HomeView extends ConsumerWidget {
     return AppcontainerWidget(
       showBackButton: false,
       isMainView: true,
-      viewTitle: '训练场',
-      viewSubTitle: '选择你的试炼',
       navigationDestination: [
         NavigationDestination(
           selectedIcon: Icon(Icons.dashboard),

@@ -51,6 +51,16 @@ class FunctionCardWidget extends ConsumerWidget {
               SizedBox(height: 8),
               Divider(height: 1, thickness: 1),
               SizedBox(height: 8),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: LinearProgressIndicator(
+                  value: 0.3,
+                  backgroundColor: Theme.of(
+                    context,
+                  ).colorScheme.primary.withAlpha(80),
+                ),
+              ),
+              SizedBox(height: 8),
               Text(
                 '进度: 20/1520',
                 style: TextStyle(
