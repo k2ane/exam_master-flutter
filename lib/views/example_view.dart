@@ -12,9 +12,9 @@ class ExampleView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Scaffold(
-      appBar: AppBar(title: Text(viewTitle)),
-      body: Text(viewDescription),
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: ListView(children: [Text(viewTitle), Text(viewDescription)]),
     );
   }
 }
