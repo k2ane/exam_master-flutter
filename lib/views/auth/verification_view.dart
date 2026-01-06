@@ -76,141 +76,138 @@ class _VerificationView extends ConsumerState<VerificationView> {
   Widget build(BuildContext context) {
     final email = ref.read(globalEmailProvider);
     return AppcontainerWidget(
-      isMainView: false,
       viewTitle: '验证',
       viewSubTitle: !fristClicked
           ? '请输入发送至 @${email.split('@')[1]} 的验证码'
           : '点击按钮获取验证码',
-      showBackButton: true,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Form(
-            child: TextFormField(
-              controller: _passcodeController,
-              decoration: InputDecoration(
-                prefixIcon: Icon(Icons.password_outlined),
-                prefixText: 'B - ',
-                labelText: '验证码',
-                border: OutlineInputBorder(),
-                suffixIcon: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: FilledButton(
-                    onPressed: isCount
-                        ? null
-                        : () async {
-                            await EasyLoading.show(status: '正在获取');
-                            try {
-                              final response = await ref
-                                  .read(authRepositoryProvider)
-                                  .sendEmailVerificationCode(email);
-                              if (response.status == 'success') {
-                                // 重置状态
-                                setState(() {
-                                  downCount = 60;
-                                });
-                                startDownCount();
-                                if (!context.mounted) return;
-                                ScaffoldMessenger.of(context).clearSnackBars();
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(
-                                      response.message,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    backgroundColor: Colors.green.shade600,
-                                  ),
-                                );
-                              }
-                            } catch (e) {
-                              EasyLoading.dismiss();
-                              debugPrint('发送错误: $e');
+      children: [
+        Form(
+          child: TextFormField(
+            controller: _passcodeController,
+            decoration: InputDecoration(
+              prefixIcon: Icon(Icons.password_outlined),
+              prefixText: 'B - ',
+              labelText: '验证码',
+              border: OutlineInputBorder(),
+              suffixIcon: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: FilledButton(
+                  onPressed: isCount
+                      ? null
+                      : () async {
+                          await EasyLoading.show(status: '请稍后...');
+                          try {
+                            final response = await ref
+                                .read(authRepositoryProvider)
+                                .sendEmailVerificationCode(email);
+                            if (response.status == 'success') {
+                              // 重置状态
+                              setState(() {
+                                downCount = 60;
+                              });
+                              startDownCount();
                               if (!context.mounted) return;
                               ScaffoldMessenger.of(context).clearSnackBars();
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text(
-                                    '$e',
+                                    response.message,
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
-                                  backgroundColor: Colors.red.shade600,
+                                  backgroundColor: Colors.green.shade600,
                                 ),
                               );
                             }
-                          },
-                    child: Text(
-                      isCount ? '${downCount}s后重试' : '获取验证码',
-                      style: TextStyle(fontSize: 12),
-                    ),
+                          } catch (e) {
+                            EasyLoading.dismiss();
+                            debugPrint('发送错误: $e');
+                            if (!context.mounted) return;
+                            ScaffoldMessenger.of(context).clearSnackBars();
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  '$e',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                backgroundColor: Colors.red.shade600,
+                              ),
+                            );
+                          }
+                        },
+                  child: Text(
+                    isCount ? '${downCount}s后重试' : '获取验证码',
+                    style: TextStyle(fontSize: 12),
                   ),
                 ),
               ),
             ),
           ),
+        ),
 
-          SizedBox(height: 24),
-          FilledButton(
-            onPressed: () async {
-              try {
-                final response = await ref
-                    .read(loginRepositoryProvider)
-                    .login(email, _passcodeController.text);
-                if (response.status == 'success' && response.token.isNotEmpty) {
-                  // 返回数据正确，将获取的token存储起来
-                  await ref
-                      .read(authStateProvider.notifier)
-                      .loginSuccess(response.token);
-                  // 返回正确消息
-                  if (!context.mounted) return;
-                  // 显示成功提示
-                  ScaffoldMessenger.of(context).clearSnackBars();
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        '登录成功',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      backgroundColor: Colors.green.shade600,
+        SizedBox(height: 24),
+        FilledButton(
+          onPressed: () async {
+            try {
+              await EasyLoading.show(status: '请稍后...');
+              final response = await ref
+                  .read(loginRepositoryProvider)
+                  .login(email, _passcodeController.text);
+              if (response.status == 'success' && response.token.isNotEmpty) {
+                // 返回数据正确，将获取的token存储起来
+                await ref
+                    .read(authStateProvider.notifier)
+                    .loginSuccess(response.token);
+                // 返回正确消息
+                if (!context.mounted) return;
+                EasyLoading.dismiss();
+                // 显示成功提示
+                ScaffoldMessenger.of(context).clearSnackBars();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      '登录成功',
+                      style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                  );
-                  // 将用户转到首页
-                  context.push('/home');
-                } else {
-                  // 返回失败消息
-                  if (!context.mounted) return;
-                  ScaffoldMessenger.of(context).clearSnackBars();
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        '登录失败',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      backgroundColor: Colors.red.shade600,
-                    ),
-                  );
-                }
-              } catch (e) {
+                    backgroundColor: Colors.green.shade600,
+                  ),
+                );
+                // 将用户转到首页
+                context.push('/home');
+              } else {
+                // 返回失败消息
+                EasyLoading.dismiss();
                 if (!context.mounted) return;
                 ScaffoldMessenger.of(context).clearSnackBars();
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(
-                      '$e',
+                      '登录失败',
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    backgroundColor: Colors.red,
+                    backgroundColor: Colors.red.shade600,
                   ),
                 );
               }
-            },
-            child: Text('验证'),
-          ),
-        ],
-      ),
+            } catch (e) {
+              EasyLoading.dismiss();
+              if (!context.mounted) return;
+              ScaffoldMessenger.of(context).clearSnackBars();
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    '$e',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  backgroundColor: Colors.red,
+                ),
+              );
+            }
+          },
+          child: Text('验证'),
+        ),
+      ],
     );
   }
 }

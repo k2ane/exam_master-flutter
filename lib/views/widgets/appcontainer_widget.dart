@@ -1,108 +1,62 @@
 import 'package:flutter/material.dart';
-import 'package:exam_master_flutter/views/widgets/appbar_widget.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AppcontainerWidget extends ConsumerStatefulWidget {
-  final bool? isMainView;
-  final String? viewTitle;
-  final String? viewSubTitle;
-  final Widget? child;
-  final bool? showBackButton;
-  final List<Widget>? navigationWidgets;
-  final List<Widget>? navigationDestination;
+  final String viewTitle;
+  final String viewSubTitle;
+  final bool showAction;
+  final List<Widget>? actions;
+  final List<Widget> children;
   const AppcontainerWidget({
     super.key,
-    this.viewTitle,
-    this.isMainView = false,
-    this.viewSubTitle,
-    this.child,
-    this.showBackButton = false,
-    this.navigationWidgets,
-    this.navigationDestination,
+    required this.viewTitle,
+    required this.viewSubTitle,
+    required this.children,
+    this.actions,
+    this.showAction = false,
   });
   @override
   ConsumerState<AppcontainerWidget> createState() => _AppContainerState();
 }
 
 class _AppContainerState extends ConsumerState<AppcontainerWidget> {
-  int currentSelectIndex = 0;
-  bool is_scrolled = false;
   @override
   Widget build(BuildContext context) {
-    return widget.isMainView!
-        ? GestureDetector(
-            onTap: () => FocusScope.of(context).unfocus(),
-            child: Scaffold(
-              body: Scrollbar(
-                child: ListView(
-                  padding: EdgeInsets.all(16.0),
-                  children: [widget.navigationWidgets![currentSelectIndex]],
+    final colorSchema = Theme.of(context).colorScheme;
+    return Scaffold(
+      appBar: AppBar(
+        actionsPadding: EdgeInsets.all(16),
+        titleSpacing: 0,
+        toolbarHeight: 104,
+        title: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                widget.viewTitle,
+                style: TextStyle().copyWith(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 36,
+                  color: colorSchema.onSurface,
                 ),
               ),
-
-              bottomNavigationBar: NavigationBar(
-                selectedIndex: currentSelectIndex,
-                onDestinationSelected: (value) => setState(() {
-                  currentSelectIndex = value;
-                }),
-                destinations: widget.navigationDestination!,
+              SizedBox(height: 8),
+              Text(
+                widget.viewSubTitle,
+                style: TextStyle().copyWith(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14,
+                  color: colorSchema.onSurfaceVariant,
+                ),
               ),
-            ),
-          )
-        : GestureDetector(
-            onTap: () => FocusScope.of(context).unfocus(),
-            child: Scaffold(
-              body: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Theme.of(
-                        context,
-                      ).colorScheme.surfaceContainerHigh, // 背景色
-                      border: Border(
-                        bottom: BorderSide(
-                          // 使用 outlineVariant (淡灰色) 作为分割线
-                          color: is_scrolled
-                              ? Theme.of(context).colorScheme.outlineVariant
-                              : Colors.transparent,
-                          width: 1.0, // 线条粗细
-                        ),
-                      ),
-                    ),
-                    width: double.infinity,
-                    padding: EdgeInsets.only(top: 16, left: 16, right: 16),
-                    height: 167,
-                    child: AppbarWidget(
-                      viewTitle: widget.viewTitle,
-                      viewSubTitle: widget.viewSubTitle,
-                      showBackButton: widget.showBackButton,
-                    ),
-                  ),
-                  Expanded(
-                    child: NotificationListener<ScrollNotification>(
-                      onNotification: (notification) {
-                        if (notification is ScrollNotification) {
-                          // 获取滚动距离
-                          final double offset = notification.metrics.pixels;
-                          final bool shouldBeScrolled = offset > 0;
-                          if (is_scrolled != shouldBeScrolled) {
-                            setState(() {
-                              is_scrolled = shouldBeScrolled;
-                            });
-                          }
-                        }
-                        return false;
-                      },
-                      child: ListView(
-                        padding: EdgeInsets.all(16.0),
-                        children: [widget.child!],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );
+            ],
+          ),
+        ),
+        actions: widget.showAction == false ? [] : widget.actions,
+        actionsIconTheme: IconThemeData(color: colorSchema.onPrimary),
+      ),
+      body: ListView(padding: EdgeInsets.all(16), children: widget.children),
+    );
   }
 }

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class FunctionCardWidget extends ConsumerWidget {
-  const FunctionCardWidget({super.key});
+  final void Function()? ontap;
+  const FunctionCardWidget({super.key, this.ontap});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -12,7 +13,7 @@ class FunctionCardWidget extends ConsumerWidget {
         margin: EdgeInsets.all(0),
         clipBehavior: Clip.antiAlias,
         child: ListTile(
-          onTap: () => {debugPrint('21312')},
+          onTap: ontap ?? () => {},
           contentPadding: EdgeInsets.all(12),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -48,13 +49,13 @@ class FunctionCardWidget extends ConsumerWidget {
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 8),
+              SizedBox(height: 16),
               Divider(height: 1, thickness: 1),
-              SizedBox(height: 8),
+              SizedBox(height: 16),
               ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: LinearProgressIndicator(
-                  value: 0.3,
+                  value: 0.1,
                   backgroundColor: Theme.of(
                     context,
                   ).colorScheme.primary.withAlpha(80),

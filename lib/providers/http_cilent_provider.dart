@@ -93,7 +93,7 @@ class DioClient {
         errorDescription = '网络连接失败，请检查网络';
         break;
       default:
-        errorDescription = '网络错误';
+        errorDescription = '未知错误，请重试';
     }
     return ApiException("error", errorDescription);
   }

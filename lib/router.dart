@@ -1,9 +1,11 @@
 import 'package:exam_master_flutter/providers/auth_state_provider.dart';
 import 'package:exam_master_flutter/providers/global_email_provider.dart';
 import 'package:exam_master_flutter/utils/app_transitions.dart';
+import 'package:exam_master_flutter/views/exam/sequential_exam_view.dart';
 import 'package:exam_master_flutter/views/example_view.dart';
 import 'package:exam_master_flutter/views/auth/login_view.dart';
 import 'package:exam_master_flutter/views/auth/verification_view.dart';
+import 'package:exam_master_flutter/views/profile_view.dart';
 import 'package:exam_master_flutter/views/widgets/desktop_layout.dart';
 import 'package:exam_master_flutter/views/widgets/phone_layout.dart';
 import 'package:exam_master_flutter/views/widgets/responsive_layout.dart';
@@ -45,8 +47,7 @@ final routerProvider = Provider<GoRouter>((ref) {
     routes: [
       GoRoute(
         path: '/login',
-        pageBuilder: (context, state) =>
-            AppTransitions.slideUp(state, const LoginView()),
+        builder: (context, state) => const LoginView(),
         routes: [
           GoRoute(
             path: '/verification',
@@ -54,20 +55,22 @@ final routerProvider = Provider<GoRouter>((ref) {
           ),
         ],
       ),
-
+      // 首页
       GoRoute(
         path: '/',
-        pageBuilder: (context, state) => AppTransitions.slideUp(
-          state,
-          ResponsiveLayout(phone: PhoneLayout(), desktop: DesktopLayout()),
-        ),
+        builder: (context, state) =>
+            ResponsiveLayout(phone: PhoneLayout(), desktop: DesktopLayout()),
+        routes: [
+          GoRoute(
+            path: '/sequential',
+            builder: (context, state) => SequentialExamView(),
+          ),
+        ],
       ),
+      // 个人资料页面
       GoRoute(
         path: '/profile',
-        builder: (context, state) => const ExampleView(
-          viewTitle: 'Profile',
-          viewDescription: 'This is Profile view.',
-        ),
+        builder: (context, state) => const ProfileView(),
       ),
     ],
   );

@@ -1,4 +1,4 @@
-import 'package:exam_master_flutter/views/widgets/appbar_widget.dart';
+import 'package:exam_master_flutter/views/widgets/appcontainer_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -11,15 +11,10 @@ class LeaderBoardView extends ConsumerStatefulWidget {
 class _LeaderBoardView extends ConsumerState<LeaderBoardView> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        AppbarWidget(
-          viewTitle: '排行榜',
-          viewSubTitle: '查看你的排名',
-          showBackButton: false,
-        ),
-      ],
+    return AppcontainerWidget(
+      viewTitle: '排行榜',
+      viewSubTitle: '与其他用户一较高下',
+      children: [Text('排行榜页面')],
     );
   }
 }
