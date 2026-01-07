@@ -1,8 +1,6 @@
-import 'package:exam_master_flutter/providers/auth_state_provider.dart';
-import 'package:exam_master_flutter/views/widgets/appcontainer_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:exam_master_flutter/views/widgets/appbar_widget.dart';
+import 'package:go_router/go_router.dart';
 
 class ProfileView extends ConsumerStatefulWidget {
   const ProfileView({super.key});
@@ -13,19 +11,105 @@ class ProfileView extends ConsumerStatefulWidget {
 class _ProfileView extends ConsumerState<ProfileView> {
   @override
   Widget build(BuildContext context) {
-    return AppcontainerWidget(
-      viewTitle: '关于我',
-      viewSubTitle: '查看与管理您的个人资料',
-      children: [
-        FilledButton.icon(
-          onPressed: () async {
-            await ref.read(authStateProvider.notifier).logout();
-          },
-          label: Text('退出登录'),
-          icon: Icon(Icons.logout),
-          iconAlignment: IconAlignment.end,
-        ),
-      ],
+    return Scaffold(
+      appBar: AppBar(title: Text('个人资料')),
+      body: ListView(
+        padding: EdgeInsets.all(16.0),
+        children: [
+          ListTile(
+            contentPadding: EdgeInsets.all(0),
+            title: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                CircleAvatar(
+                  radius: 25,
+                  child: Text('K', style: TextStyle().copyWith(fontSize: 25)),
+                ),
+                SizedBox(width: 16),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Kane',
+                      style: TextStyle().copyWith(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      'k2anefs@gmail.com',
+                      style: TextStyle().copyWith(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: Divider(height: 1, thickness: 1),
+          ),
+
+          Card(
+            clipBehavior: Clip.antiAlias,
+            child: ListTile(
+              onTap: () => context.go('/profile/account'),
+              leading: CircleAvatar(
+                backgroundColor: Colors.teal,
+                foregroundColor: Colors.white,
+                child: Icon(Icons.account_box_outlined),
+              ),
+              title: Text('账户管理'),
+              subtitle: Text(
+                '管理您的账户',
+                style: TextStyle().copyWith(fontSize: 12),
+              ),
+              trailing: Icon(Icons.arrow_right_outlined),
+            ),
+          ),
+
+          Card(
+            clipBehavior: Clip.antiAlias,
+            child: ListTile(
+              onTap: () {},
+              leading: CircleAvatar(
+                backgroundColor: Colors.purple,
+                foregroundColor: Colors.white,
+                child: Icon(Icons.timeline_outlined),
+              ),
+              title: Text('答题统计'),
+              subtitle: Text(
+                '查看您的所有答题记录',
+                style: TextStyle().copyWith(fontSize: 12),
+              ),
+              trailing: Icon(Icons.arrow_right_outlined),
+            ),
+          ),
+
+          Card(
+            clipBehavior: Clip.antiAlias,
+            child: ListTile(
+              onTap: () {},
+              leading: CircleAvatar(
+                backgroundColor: Colors.blue,
+                foregroundColor: Colors.white,
+                child: Icon(Icons.support_agent),
+              ),
+              title: Text('AI助手积分'),
+              subtitle: Text(
+                '查看您的AI Agent使用情况',
+                style: TextStyle().copyWith(fontSize: 12),
+              ),
+              trailing: Icon(Icons.arrow_right_outlined),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

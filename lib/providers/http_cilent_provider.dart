@@ -12,7 +12,7 @@ final dioProvider = Provider<Dio>((ref) {
   // Dio配置
   final options = BaseOptions(
     // 特殊配置安卓模拟器访问本地localhost地址 10.0.2.2
-    baseUrl: 'http://127.0.0.1:3000/api/v1',
+    baseUrl: 'https://quiz.bondex.fit/api/v1',
     connectTimeout: Duration(seconds: 10),
     receiveTimeout: Duration(seconds: 10),
     contentType: Headers.jsonContentType,

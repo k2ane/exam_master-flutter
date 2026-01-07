@@ -1,0 +1,40 @@
+import 'package:exam_master_flutter/views/widgets/navigationbar_item.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+
+class PhoneScaffoldWithNavigationbar extends ConsumerStatefulWidget {
+  final StatefulNavigationShell navigationShell;
+  const PhoneScaffoldWithNavigationbar({
+    super.key,
+    required this.navigationShell,
+  });
+  @override
+  ConsumerState<PhoneScaffoldWithNavigationbar> createState() =>
+      _PhoneScaffoldWithNavigationbar();
+}
+
+class _PhoneScaffoldWithNavigationbar
+    extends ConsumerState<PhoneScaffoldWithNavigationbar> {
+  @override
+  Widget build(BuildContext context) {
+    final List<NavigationbarItem> items = navConfig;
+    return Scaffold(
+      body: widget.navigationShell,
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: widget.navigationShell.currentIndex,
+        onDestinationSelected: (value) => widget.navigationShell.goBranch(
+          value,
+          initialLocation: value == widget.navigationShell.currentIndex,
+        ),
+        destinations: items.map((items) {
+          return NavigationDestination(
+            icon: Icon(items.icon),
+            label: items.label,
+            selectedIcon: Icon(items.selectedIcon),
+          );
+        }).toList(),
+      ),
+    );
+  }
+}

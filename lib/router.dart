@@ -1,14 +1,16 @@
 import 'package:exam_master_flutter/providers/auth_state_provider.dart';
 import 'package:exam_master_flutter/providers/global_email_provider.dart';
-import 'package:exam_master_flutter/utils/app_transitions.dart';
+import 'package:exam_master_flutter/views/arena_view.dart';
 import 'package:exam_master_flutter/views/exam/sequential_exam_view.dart';
-import 'package:exam_master_flutter/views/example_view.dart';
 import 'package:exam_master_flutter/views/auth/login_view.dart';
 import 'package:exam_master_flutter/views/auth/verification_view.dart';
+import 'package:exam_master_flutter/views/leader_board_view.dart';
+import 'package:exam_master_flutter/views/license_view.dart';
 import 'package:exam_master_flutter/views/profile_view.dart';
-import 'package:exam_master_flutter/views/widgets/desktop_layout.dart';
-import 'package:exam_master_flutter/views/widgets/phone_layout.dart';
+import 'package:exam_master_flutter/views/widgets/desktop_scaffold_with_navigationbar.dart';
 import 'package:exam_master_flutter/views/widgets/responsive_layout.dart';
+import 'package:exam_master_flutter/views/widgets/phone_scaffold_with_navigationbar.dart';
+import 'package:exam_master_flutter/views/widgets/settings_template.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -45,6 +47,65 @@ final routerProvider = Provider<GoRouter>((ref) {
 
     // 3. 定义路由表
     routes: [
+      // 保留底部导航栏且保留页面状态的路由
+      StatefulShellRoute.indexedStack(
+        builder: (context, state, navigationShell) {
+          return ResponsiveLayout(
+            phone: PhoneScaffoldWithNavigationbar(
+              navigationShell: navigationShell,
+            ),
+            desktop: DesktopScaffoldWithNavigationbar(
+              navigationShell: navigationShell,
+            ),
+          );
+        },
+        branches: [
+          StatefulShellBranch(
+            routes: [
+              // 首页
+              GoRoute(
+                path: '/',
+                builder: (context, state) => const ArenaView(),
+                routes: [
+                  GoRoute(
+                    path: '/sequential',
+                    builder: (context, state) => SequentialExamView(),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/rank',
+                builder: (context, state) => LeaderBoardView(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              // 个人资料页面
+              GoRoute(
+                path: '/profile',
+                builder: (context, state) => const ProfileView(),
+                routes: [
+                  GoRoute(
+                    path: '/account',
+                    builder: (context, state) =>
+                        const SettingsTemplate(pageTitle: '账户管理'),
+                  ),
+                  GoRoute(
+                    path: '/license',
+                    builder: (context, state) => const LicenseView(),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ],
+      ),
+      // 普通路由
       GoRoute(
         path: '/login',
         builder: (context, state) => const LoginView(),
@@ -54,23 +115,6 @@ final routerProvider = Provider<GoRouter>((ref) {
             builder: (context, state) => const VerificationView(),
           ),
         ],
-      ),
-      // 首页
-      GoRoute(
-        path: '/',
-        builder: (context, state) =>
-            ResponsiveLayout(phone: PhoneLayout(), desktop: DesktopLayout()),
-        routes: [
-          GoRoute(
-            path: '/sequential',
-            builder: (context, state) => SequentialExamView(),
-          ),
-        ],
-      ),
-      // 个人资料页面
-      GoRoute(
-        path: '/profile',
-        builder: (context, state) => const ProfileView(),
       ),
     ],
   );
