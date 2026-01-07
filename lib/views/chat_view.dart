@@ -46,6 +46,7 @@ class _ChatView extends ConsumerState<ChatView> {
 
     setState(() {
       fullResponse = "";
+      currentResponse = '';
       thinkBuffer.clear();
       isThinking = true;
       storage.add(ChatMessage(message: '思考中...', isUser: false));
@@ -80,6 +81,7 @@ class _ChatView extends ConsumerState<ChatView> {
         // ----------------------------------------------------
         // 情况 B: 还在思考中，或者刚开始
         // ----------------------------------------------------
+
         thinkBuffer.write(chunk); // 先扔进暂存区，不显示
         String currentBuffer = thinkBuffer.toString();
         // 检查 1: 看看有没有结束标签 </think>
@@ -100,6 +102,7 @@ class _ChatView extends ConsumerState<ChatView> {
 
           setState(() {
             fullResponse += realContent; // 把“解禁”后的内容显示出来
+            currentResponse += chunk;
           });
           return;
         }
@@ -130,6 +133,8 @@ class _ChatView extends ConsumerState<ChatView> {
           storage.remove(storage.last);
           if (fullResponse.isNotEmpty) {
             storage.add(ChatMessage(message: fullResponse, isUser: false));
+          } else {
+            storage.add(ChatMessage(message: '回答失败', isUser: false));
           }
           isResponse = false;
         });
@@ -162,19 +167,21 @@ class _ChatView extends ConsumerState<ChatView> {
           children: [
             // 聊天可滚动页面
             Expanded(
-              child: ListView.builder(
-                controller: _scrollController,
-                itemCount: storage.length,
-                itemBuilder: (context, index) {
-                  return message(
-                    context,
-                    storage[index].message,
-                    isUser: storage[index].isUser,
-                  );
-                  // isResponse
-                  //     ? message(context, currentResponse)
-                  //     : SizedBox.shrink(),
-                },
+              child: Scrollbar(
+                child: ListView.builder(
+                  // controller: _scrollController,
+                  itemCount: storage.length,
+                  itemBuilder: (context, index) {
+                    return message(
+                      context,
+                      storage[index].message,
+                      isUser: storage[index].isUser,
+                    );
+                    // isResponse
+                    //     ? message(context, currentResponse)
+                    //     : SizedBox.shrink(),
+                  },
+                ),
               ),
             ),
             Padding(

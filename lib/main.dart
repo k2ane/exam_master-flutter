@@ -32,11 +32,11 @@ class ExamApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final lightColorSchema = ColorScheme.fromSeed(
-      seedColor: Colors.green, // 种子颜色
+      seedColor: Colors.blue, // 种子颜色
       brightness: Brightness.light,
     );
     final darkColorSchema = ColorScheme.fromSeed(
-      seedColor: Colors.green,
+      seedColor: Colors.blue,
       brightness: Brightness.dark,
     );
     final goRouter = ref.watch(routerProvider);
@@ -67,7 +67,7 @@ class ExamApp extends ConsumerWidget {
       locale: const Locale('zh', 'CN'),
       supportedLocales: const [
         Locale('zh', 'CN'), // 中文简体
-        Locale('en', 'US'), // 美国英语
+        // Locale('en', 'US'), // 美国英语
       ],
       localizationsDelegates: const [
         // 负责 Material 组件 (包括 Back 按钮、日期弹窗等)

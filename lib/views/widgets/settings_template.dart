@@ -17,12 +17,13 @@ class SettingsTemplate extends ConsumerWidget {
         itemCount: 10,
         itemBuilder: (context, index) {
           return Card(
+            clipBehavior: Clip.antiAlias,
             margin: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
             child: ListTile(
               onTap: () {},
               // onTap: () => {ref.watch(authStateProvider.notifier).logout()},
-              title: Text('标题'),
-              subtitle: Text('副标题'),
+              title: Text('事件标题'),
+              subtitle: Text('事件描述'),
             ),
           );
         },
