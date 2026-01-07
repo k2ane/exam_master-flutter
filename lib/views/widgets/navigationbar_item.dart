@@ -24,6 +24,11 @@ final List<NavigationbarItem> navConfig = [
     selectedIcon: Icons.leaderboard,
   ),
   NavigationbarItem(
+    label: '助手',
+    icon: Icons.support_agent_outlined,
+    selectedIcon: Icons.support_agent,
+  ),
+  NavigationbarItem(
     label: '个人资料',
     icon: Icons.person_outline,
     selectedIcon: Icons.person,

@@ -11,8 +11,11 @@ class _LeaderBoardView extends ConsumerState<LeaderBoardView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('排行榜')),
-      body: Text('排行榜页面'),
+      appBar: AppBar(
+        title: Text('排行榜', style: TextStyle(fontSize: 36)),
+        centerTitle: false,
+      ),
+      body: Padding(padding: const EdgeInsets.all(16.0), child: Text('排行榜页面')),
     );
   }
 }

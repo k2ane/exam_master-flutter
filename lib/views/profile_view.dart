@@ -12,7 +12,10 @@ class _ProfileView extends ConsumerState<ProfileView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('个人资料')),
+      appBar: AppBar(
+        title: Text('个人资料', style: TextStyle(fontSize: 36)),
+        centerTitle: false,
+      ),
       body: ListView(
         padding: EdgeInsets.all(16.0),
         children: [
@@ -23,7 +26,7 @@ class _ProfileView extends ConsumerState<ProfileView> {
               children: [
                 CircleAvatar(
                   radius: 25,
-                  child: Text('K', style: TextStyle().copyWith(fontSize: 25)),
+                  child: Text('U', style: TextStyle().copyWith(fontSize: 25)),
                 ),
                 SizedBox(width: 16),
                 Column(
@@ -32,14 +35,14 @@ class _ProfileView extends ConsumerState<ProfileView> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Kane',
+                      'User',
                       style: TextStyle().copyWith(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
-                      'k2anefs@gmail.com',
+                      'user@email.com',
                       style: TextStyle().copyWith(
                         fontSize: 12,
                         fontWeight: FontWeight.w500,

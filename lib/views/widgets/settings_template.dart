@@ -8,13 +8,19 @@ class SettingsTemplate extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: AppBar(title: Text(pageTitle)),
+      appBar: AppBar(
+        title: Text('账户管理', style: TextStyle(fontSize: 36)),
+        centerTitle: false,
+      ),
       body: ListView.builder(
+        padding: EdgeInsets.only(top: 8),
         itemCount: 10,
         itemBuilder: (context, index) {
           return Card(
+            margin: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
             child: ListTile(
-              onTap: () => ref.watch(authStateProvider.notifier).logout(),
+              onTap: () {},
+              // onTap: () => {ref.watch(authStateProvider.notifier).logout()},
               title: Text('标题'),
               subtitle: Text('副标题'),
             ),

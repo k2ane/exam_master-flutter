@@ -6,8 +6,11 @@ class ArenaView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: AppBar(title: Text('竞技场')),
-      body: Text('竞技场页面'),
+      appBar: AppBar(
+        title: Text('竞技场', style: TextStyle(fontSize: 36)),
+        centerTitle: false,
+      ),
+      body: Padding(padding: const EdgeInsets.all(16.0), child: Text('竞技场页面')),
     );
   }
 }

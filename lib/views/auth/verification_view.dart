@@ -69,7 +69,6 @@ class _VerificationView extends ConsumerState<VerificationView> {
 
   @override
   Widget build(BuildContext context) {
-    final email = ref.read(globalEmailProvider);
     return Scaffold();
   }
 }
