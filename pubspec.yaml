@@ -28,6 +28,8 @@ dependencies:
   # 加载动画
   flutter_easyloading: ^3.0.5
   http: ^1.6.0
+  # 聊天ui库
+  dash_chat_2: ^0.0.20
 
 dev_dependencies:
   flutter_test:
@@ -35,6 +37,10 @@ dev_dependencies:
   flutter_lints: ^6.0.0
   build_runner: ^2.4.9
   riverpod_generator: ^2.4.0
+
+# 🔥↓↓↓ 添加这段代码 ↓↓↓🔥
+dependency_overrides:
+  intl: ^0.20.2
 
 flutter:
   uses-material-design: true

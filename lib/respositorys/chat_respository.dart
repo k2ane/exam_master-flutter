@@ -5,9 +5,9 @@ import 'package:http/http.dart' as http;
 
 class ChatRespository {
   // API key
-  final String apiKey = 'app-7vxg9OtZUpDI1CDirZ5BkWmD';
+  final String apiKey = 'app-7vjpim82Ng4DKKuoFWJ2q2fU';
   // API 地址
-  final String baseUrl = 'https://api.dify.ai/v1';
+  final String baseUrl = 'http://localhost/v1';
   // 流式消息
   /// 发送流式消息
   /// [query]: 用户输入的问题
@@ -54,7 +54,7 @@ class ChatRespository {
 
               // 2. 提取 JSON 字符串 (去掉 'data: ' 前缀)
               final jsonStr = line.substring(6);
-
+              // debugPrint(jsonStr);
               try {
                 final Map<String, dynamic> data = jsonDecode(jsonStr);
                 final String event = data['event'];
@@ -66,7 +66,7 @@ class ChatRespository {
                 // 情况 A: 真正的对话内容 (对应你日志里的 event: message)
                 if (event == 'message' || event == 'text_chunk') {
                   final String answer = data['answer'] ?? '';
-
+                  // debugPrint(answer);
                   // 回调给 UI，这里就是 "嗯"、"，" 这些字
                   if (answer.isNotEmpty) {
                     onTextChunk(answer);

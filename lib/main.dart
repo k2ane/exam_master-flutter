@@ -13,7 +13,7 @@ void main() {
   // 引擎初始化
   WidgetsFlutterBinding.ensureInitialized();
   // 全面屏
-  // 铺满整个屏幕”
+  // 铺满整个屏幕
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   // 设置状态栏和导航栏样式
   SystemChrome.setSystemUIOverlayStyle(
