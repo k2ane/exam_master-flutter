@@ -91,7 +91,7 @@ class _ChatView extends ConsumerState<ChatView> {
       );
     });
     chat.sendMessageStream(
-      conversationId: 'ba6b88ae-32e3-4192-8eb4-64866070cacf',
+      conversationId: '',
       query: text,
       onTextChunk: ((chunk) {
         setState(() {
@@ -120,9 +120,11 @@ class _ChatView extends ConsumerState<ChatView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('海邦助手')),
+      appBar: AppBar(title: const Text('海邦助手'), centerTitle: false),
       body: DashChat(
         messageOptions: MessageOptions(
+          currentUserContainerColor: Theme.of(context).colorScheme.primary,
+          currentUserTextColor: Theme.of(context).colorScheme.onPrimary,
           showTime: true,
           marginDifferentAuthor: EdgeInsets.only(top: 16, left: 16, right: 16),
           marginSameAuthor: EdgeInsets.only(top: 16, left: 16, right: 16),
@@ -150,7 +152,7 @@ class _ChatView extends ConsumerState<ChatView> {
           });
           sendMessage(m.text);
 
-          print("发送了: ${m.text}");
+          debugPrint("用户发送了: ${m.text}");
         },
         messages: _messages.map((item) {
           return ChatMessage(
@@ -159,7 +161,7 @@ class _ChatView extends ConsumerState<ChatView> {
             text: item.text,
           );
         }).toList(),
-        // 🔥 AI 场景必备：正在输入动画
+        // 输入动画
         typingUsers: isResponse ? [ai] : [],
         messageListOptions: MessageListOptions(
           typingBuilder: (user) {

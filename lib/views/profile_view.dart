@@ -19,7 +19,7 @@ class _ProfileView extends ConsumerState<ProfileView> {
           Card(
             margin: EdgeInsets.all(0),
             child: ListTile(
-              contentPadding: EdgeInsets.all(16),
+              contentPadding: EdgeInsets.only(top: 8, left: 16, right: 16),
               title: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -30,13 +30,13 @@ class _ProfileView extends ConsumerState<ProfileView> {
                       CircleAvatar(
                         radius: 25,
                         child: Text(
-                          'U',
+                          'J',
                           style: TextStyle().copyWith(fontSize: 25),
                         ),
                       ),
                       SizedBox(width: 8),
                       Text(
-                        'User',
+                        'JhonAppleSeed',
                         style: TextStyle().copyWith(
                           fontSize: 32,
                           // fontWeight: FontWeight.bold,
@@ -47,17 +47,16 @@ class _ProfileView extends ConsumerState<ProfileView> {
                   SizedBox(height: 8),
                   Row(
                     children: [
-                      SizedBox(width: 4),
                       Chip(
                         avatar: Icon(Icons.email_outlined),
                         label: Text(
-                          'user@email.com',
+                          'jhonappleseed@icloud.com',
                           style: TextStyle().copyWith(fontSize: 12),
                         ),
                       ),
                       SizedBox(width: 4),
                       Chip(
-                        avatar: Icon(Icons.abc),
+                        avatar: Icon(Icons.people_outlined),
                         label: Text(
                           '员工',
                           style: TextStyle().copyWith(fontSize: 12),

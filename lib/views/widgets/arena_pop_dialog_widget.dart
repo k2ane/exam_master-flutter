@@ -6,8 +6,8 @@ Future<dynamic> showArenaPopDialog(BuildContext context) async {
     context: context,
     builder: (context) {
       return AlertDialog(
-        title: Text('About Title'),
-        content: Text('content...'),
+        title: Text('测试弹窗'),
+        content: Text('弹窗内容...'),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, 'Cancel'),

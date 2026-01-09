@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 
 class ChatRespository {
   // API key
-  final String apiKey = 'app-7vjpim82Ng4DKKuoFWJ2q2fU';
+  final String apiKey = 'app-zVDPKbSPGl2WC0dhLztQghGR';
   // API 地址
   final String baseUrl = 'http://localhost/v1';
   // 流式消息
@@ -34,9 +34,9 @@ class ChatRespository {
 
     // 设置 Body
     request.body = jsonEncode({
-      "inputs": {}, // 如果你的 Dify 应用有变量，在这里填
+      "inputs": {}, // dify变量, 如果有?
       "query": query,
-      "response_mode": "streaming", // 🔥 关键：必须是 streaming
+      "response_mode": "streaming", // 流式传输数据
       "conversation_id": conversationId ?? "",
       "user": "app-user-id", // 区分不同用户的标识
     });

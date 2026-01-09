@@ -6,6 +6,8 @@ class ArenaCardWidget extends ConsumerWidget {
   final String subTitle;
   final String iamgeUrl;
   final EdgeInsets? padding;
+  final Color? badgeColor;
+  final Color? textColor;
   final void Function()? action;
   const ArenaCardWidget({
     super.key,
@@ -14,6 +16,8 @@ class ArenaCardWidget extends ConsumerWidget {
     required this.iamgeUrl,
     this.padding,
     this.action,
+    this.badgeColor,
+    this.textColor,
   });
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -31,6 +35,7 @@ class ArenaCardWidget extends ConsumerWidget {
             width: double.infinity,
             height: 150,
             fit: BoxFit.cover,
+            gaplessPlayback: true,
           ),
           subtitle: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -41,13 +46,27 @@ class ArenaCardWidget extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(cardTitle, style: TextStyle().copyWith(fontSize: 20)),
-                    Text(
-                      subTitle,
-                      style: TextStyle().copyWith(
-                        color: Colors.grey,
-                        fontSize: 12,
+                    SizedBox(height: 4),
+                    Badge(
+                      label: Text(
+                        subTitle,
+                        style: TextStyle().copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
+                      textColor:
+                          textColor ??
+                          Theme.of(context).colorScheme.surfaceContainer,
+                      backgroundColor:
+                          badgeColor ?? Theme.of(context).colorScheme.primary,
                     ),
+                    // Text(
+                    //   subTitle,
+                    //   style: TextStyle().copyWith(
+                    //     color: Colors.grey,
+                    //     fontSize: 12,
+                    //   ),
+                    // ),
                   ],
                 ),
                 Icon(Icons.chevron_right),
