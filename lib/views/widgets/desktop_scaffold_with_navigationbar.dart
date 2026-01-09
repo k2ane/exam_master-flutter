@@ -25,7 +25,17 @@ class _DesktopScaffoldWithNavigationbar
       body: Row(
         children: [
           NavigationRail(
-            leading: SizedBox(height: 4),
+            leading: Column(
+              children: [
+                SizedBox(height: 4),
+                IconButton(
+                  onPressed: () => {},
+                  icon: Icon(Icons.dashboard),
+                  tooltip: '管理后台',
+                ),
+                SizedBox(height: 16),
+              ],
+            ),
             trailing: SizedBox(height: 4),
             labelType: NavigationRailLabelType.all,
             selectedIndex: widget.navigationShell.currentIndex,

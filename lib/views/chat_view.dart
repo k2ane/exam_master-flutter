@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:exam_master_flutter/respositorys/chat_respository.dart';
 import 'package:flutter/material.dart';
@@ -15,28 +17,67 @@ class _ChatView extends ConsumerState<ChatView> {
   final ChatUser user = ChatUser(id: '1', firstName: 'Kane');
   final ChatUser ai = ChatUser(
     id: '2',
-    firstName: '海程问答助手',
+    firstName: '海邦问答助手',
     // profileImage: 'https://api.dicebear.com/7.x/bottts/png?seed=ai',
   );
 
   final List<ChatMessage> _messages = <ChatMessage>[];
 
-  @override
-  void dispose() {
-    _messages.clear();
-    super.dispose();
-  }
-
   String currentResponse = '';
   bool isResponse = false;
   bool isThinking = true;
 
+  // 动画定时器
+  Timer? _typingTimer;
+
+  // 缓存区：存放 API 返回的最新完整内容
+  String _targetText = "";
+
+  // 显示区：界面上实际渲染的内容
+  String _currentDisplayText = "";
+
+  @override
+  void dispose() {
+    _typingTimer?.cancel();
+    _messages.clear();
+    super.dispose();
+  }
+
   final chat = ChatRespository();
+
+  void _startTypingAnimation() {
+    // 如果定时器已经在跑，就别管它，让它继续跑
+    if (_typingTimer != null && _typingTimer!.isActive) return;
+    _typingTimer = Timer.periodic(const Duration(milliseconds: 30), (timer) {
+      // 1. 如果显示的内容 已经追上了 目标内容
+      if (_currentDisplayText.length >= _targetText.length) {
+        // 这里的逻辑是：如果没有新数据进来，且字都打完了，就暂停一下（不销毁 timer，等待新数据）
+        // 或者你可以选择在这里 cancel timer，等收到新 chunk 再重建
+        return;
+      }
+      // 2. 取出下一个要显示的字符
+      // 比如当前显示了 10 个字，目标有 15 个字，那我们就取第 11 个字加进去
+      final nextChar = _targetText[_currentDisplayText.length];
+
+      setState(() {
+        _currentDisplayText += nextChar;
+        // 如果是 DashChat
+        _messages.first = ChatMessage(
+          user: ai,
+          createdAt: DateTime.now().subtract(Duration(seconds: 1)),
+          text: _currentDisplayText, // 🔥 使用逐字增加的文本
+        );
+      });
+    });
+  }
 
   Future<void> sendMessage(String text) async {
     // 清空Response
     currentResponse = '';
-    String tmp = '';
+    // 1. 初始化
+    _targetText = "";
+    _currentDisplayText = "";
+    _typingTimer?.cancel(); // 先关掉旧的
     // 初始化
     setState(() {
       isResponse = true;
@@ -50,41 +91,27 @@ class _ChatView extends ConsumerState<ChatView> {
       );
     });
     chat.sendMessageStream(
+      conversationId: 'ba6b88ae-32e3-4192-8eb4-64866070cacf',
       query: text,
       onTextChunk: ((chunk) {
-        // tmp += chunk;
-        // debugPrint(tmp);
-        // 检查是是否思考完成
-        // if (tmp.contains('<think>')) {
-        //   isThinking = true;
-        //   debugPrint('开始思考');
-        //   return;
-        // }
-        // // 思考完成
-        // if (tmp.contains('</think>')) {
-        //   isThinking = false;
-        //   debugPrint('思考结束');
-        //   return;
-        // }
-        // // 思考中忽略思考部分
-        // if (isThinking) {
-        //   debugPrint('正在思考中...');
-        //   return;
-        // }
-        // 思考完成进入回答正文
-        currentResponse += chunk;
         setState(() {
-          _messages.first = ChatMessage(
-            user: ai,
-            createdAt: DateTime.now(),
-            text: currentResponse,
-          );
+          currentResponse += chunk;
+          // _messages.first = ChatMessage(
+          //   user: ai,
+          //   createdAt: DateTime.now(),
+          //   text: currentResponse,
+          // );
         });
+        _targetText += chunk;
+        _startTypingAnimation();
       }),
       onDone: () {
         setState(() {
           isResponse = false;
         });
+        if (_currentDisplayText == _targetText) {
+          _typingTimer!.cancel();
+        }
         debugPrint('输出完成');
       },
     );
@@ -93,7 +120,7 @@ class _ChatView extends ConsumerState<ChatView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('海程问答助手')),
+      appBar: AppBar(title: const Text('海邦助手')),
       body: DashChat(
         messageOptions: MessageOptions(
           showTime: true,
@@ -101,10 +128,16 @@ class _ChatView extends ConsumerState<ChatView> {
           marginSameAuthor: EdgeInsets.only(top: 16, left: 16, right: 16),
         ),
         inputOptions: InputOptions(
+          sendButtonBuilder: (send) {
+            return Padding(
+              padding: const EdgeInsets.only(left: 8),
+              child: FilledButton(onPressed: send, child: Text('发送')),
+            );
+          },
           inputToolbarPadding: EdgeInsets.all(16),
           inputDecoration: InputDecoration(
-            label: Text('请输入内容'),
-            border: OutlineInputBorder(),
+            label: Text('请输入问题'),
+            border: UnderlineInputBorder(),
           ),
         ),
         currentUser: user,

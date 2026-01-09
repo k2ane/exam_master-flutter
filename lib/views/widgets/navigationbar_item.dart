@@ -15,8 +15,8 @@ class NavigationbarItem {
 final List<NavigationbarItem> navConfig = [
   NavigationbarItem(
     label: '试炼场',
-    icon: Icons.dashboard_outlined,
-    selectedIcon: Icons.dashboard,
+    icon: Icons.sports_kabaddi_outlined,
+    selectedIcon: Icons.sports_kabaddi,
   ),
   NavigationbarItem(
     label: '排行榜',
@@ -24,7 +24,7 @@ final List<NavigationbarItem> navConfig = [
     selectedIcon: Icons.leaderboard,
   ),
   NavigationbarItem(
-    label: '助手',
+    label: '海邦助手',
     icon: Icons.support_agent_outlined,
     selectedIcon: Icons.support_agent,
   ),

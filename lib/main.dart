@@ -32,16 +32,17 @@ class ExamApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final lightColorSchema = ColorScheme.fromSeed(
-      seedColor: Colors.blue, // 种子颜色
+      seedColor: Colors.green, // 种子颜色
       brightness: Brightness.light,
     );
     final darkColorSchema = ColorScheme.fromSeed(
-      seedColor: Colors.blue,
+      seedColor: Colors.green,
       brightness: Brightness.dark,
     );
     final goRouter = ref.watch(routerProvider);
     return MaterialApp.router(
-      title: '海程问答',
+      // showPerformanceOverlay: true,
+      title: '海邦问答',
       routerConfig: goRouter,
       themeMode: ThemeMode.system,
       debugShowCheckedModeBanner: false,

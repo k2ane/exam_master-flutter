@@ -12,53 +12,66 @@ class _ProfileView extends ConsumerState<ProfileView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('个人资料', style: TextStyle(fontSize: 36)),
-        centerTitle: false,
-      ),
+      appBar: AppBar(title: Text('个人资料'), centerTitle: false),
       body: ListView(
         padding: EdgeInsets.all(16.0),
         children: [
-          ListTile(
-            contentPadding: EdgeInsets.all(0),
-            title: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                CircleAvatar(
-                  radius: 25,
-                  child: Text('U', style: TextStyle().copyWith(fontSize: 25)),
-                ),
-                SizedBox(width: 16),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'User',
-                      style: TextStyle().copyWith(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+          Card(
+            margin: EdgeInsets.all(0),
+            child: ListTile(
+              contentPadding: EdgeInsets.all(16),
+              title: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      CircleAvatar(
+                        radius: 25,
+                        child: Text(
+                          'U',
+                          style: TextStyle().copyWith(fontSize: 25),
+                        ),
                       ),
-                    ),
-                    Text(
-                      'user@email.com',
-                      style: TextStyle().copyWith(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
+                      SizedBox(width: 8),
+                      Text(
+                        'User',
+                        style: TextStyle().copyWith(
+                          fontSize: 32,
+                          // fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                  SizedBox(height: 8),
+                  Row(
+                    children: [
+                      SizedBox(width: 4),
+                      Chip(
+                        avatar: Icon(Icons.email_outlined),
+                        label: Text(
+                          'user@email.com',
+                          style: TextStyle().copyWith(fontSize: 12),
+                        ),
+                      ),
+                      SizedBox(width: 4),
+                      Chip(
+                        avatar: Icon(Icons.abc),
+                        label: Text(
+                          '员工',
+                          style: TextStyle().copyWith(fontSize: 12),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8),
-            child: Divider(height: 1, thickness: 1),
-          ),
-
+          SizedBox(height: 12),
           Card(
+            margin: EdgeInsets.all(0),
             clipBehavior: Clip.antiAlias,
             child: ListTile(
               onTap: () => context.go('/profile/account'),
@@ -72,11 +85,12 @@ class _ProfileView extends ConsumerState<ProfileView> {
                 '管理您的账户',
                 style: TextStyle().copyWith(fontSize: 12),
               ),
-              trailing: Icon(Icons.arrow_right_outlined),
+              trailing: Icon(Icons.chevron_right_outlined),
             ),
           ),
-
+          SizedBox(height: 8),
           Card(
+            margin: EdgeInsets.all(0),
             clipBehavior: Clip.antiAlias,
             child: ListTile(
               onTap: () {},
@@ -90,11 +104,12 @@ class _ProfileView extends ConsumerState<ProfileView> {
                 '查看您的所有答题记录',
                 style: TextStyle().copyWith(fontSize: 12),
               ),
-              trailing: Icon(Icons.arrow_right_outlined),
+              trailing: Icon(Icons.chevron_right_outlined),
             ),
           ),
-
+          SizedBox(height: 8),
           Card(
+            margin: EdgeInsets.all(0),
             clipBehavior: Clip.antiAlias,
             child: ListTile(
               onTap: () {},
@@ -103,12 +118,12 @@ class _ProfileView extends ConsumerState<ProfileView> {
                 foregroundColor: Colors.white,
                 child: Icon(Icons.support_agent),
               ),
-              title: Text('AI助手积分'),
+              title: Text('海邦助手'),
               subtitle: Text(
-                '查看您的AI Agent使用情况',
+                '查看您的助手使用情况',
                 style: TextStyle().copyWith(fontSize: 12),
               ),
-              trailing: Icon(Icons.arrow_right_outlined),
+              trailing: Icon(Icons.chevron_right_outlined),
             ),
           ),
         ],

@@ -2,6 +2,7 @@ import 'package:exam_master_flutter/providers/auth_state_provider.dart';
 import 'package:exam_master_flutter/providers/global_email_provider.dart';
 import 'package:exam_master_flutter/views/arena_view.dart';
 import 'package:exam_master_flutter/views/chat_view.dart';
+import 'package:exam_master_flutter/views/dashboard_view.dart';
 import 'package:exam_master_flutter/views/exam/sequential_exam_view.dart';
 import 'package:exam_master_flutter/views/auth/login_view.dart';
 import 'package:exam_master_flutter/views/auth/verification_view.dart';
@@ -124,6 +125,10 @@ final routerProvider = Provider<GoRouter>((ref) {
             builder: (context, state) => const VerificationView(),
           ),
         ],
+      ),
+      GoRoute(
+        path: '/dashboard',
+        builder: (context, state) => const DashboardView(),
       ),
     ],
   );

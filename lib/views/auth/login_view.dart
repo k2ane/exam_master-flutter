@@ -78,7 +78,7 @@ class _LoginView extends ConsumerState<LoginView> {
 
           Expanded(
             child: Image.asset(
-              'bg2.png',
+              'Basic_Question_Bank.jpg',
               height: double.infinity,
               fit: BoxFit.cover,
             ),
