@@ -4,10 +4,12 @@ class NavigationbarItem {
   final String label;
   final IconData icon;
   final IconData selectedIcon;
+  final String? badgeTitle;
   NavigationbarItem({
     required this.label,
     required this.icon,
     required this.selectedIcon,
+    this.badgeTitle,
   });
 }
 
@@ -25,6 +27,7 @@ final List<NavigationbarItem> navConfig = [
   ),
   NavigationbarItem(
     label: '海邦助手',
+    badgeTitle: 'Demo',
     icon: Icons.support_agent_outlined,
     selectedIcon: Icons.support_agent,
   ),

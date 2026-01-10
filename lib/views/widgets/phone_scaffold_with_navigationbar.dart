@@ -29,9 +29,19 @@ class _PhoneScaffoldWithNavigationbar
         ),
         destinations: items.map((items) {
           return NavigationDestination(
-            icon: Icon(items.icon),
+            icon: items.badgeTitle != null
+                ? Badge(
+                    label: Text(items.badgeTitle ?? ''),
+                    child: Icon(items.icon),
+                  )
+                : Icon(items.icon),
             label: items.label,
-            selectedIcon: Icon(items.selectedIcon),
+            selectedIcon: items.badgeTitle != null
+                ? Badge(
+                    label: Text(items.badgeTitle ?? ''),
+                    child: Icon(items.selectedIcon),
+                  )
+                : Icon(items.selectedIcon),
           );
         }).toList(),
       ),

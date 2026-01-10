@@ -47,26 +47,29 @@ class ArenaCardWidget extends ConsumerWidget {
                   children: [
                     Text(cardTitle, style: TextStyle().copyWith(fontSize: 20)),
                     SizedBox(height: 4),
-                    Badge(
-                      label: Text(
-                        subTitle,
-                        style: TextStyle().copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      textColor:
-                          textColor ??
-                          Theme.of(context).colorScheme.surfaceContainer,
-                      backgroundColor:
-                          badgeColor ?? Theme.of(context).colorScheme.primary,
-                    ),
-                    // Text(
-                    //   subTitle,
-                    //   style: TextStyle().copyWith(
-                    //     color: Colors.grey,
-                    //     fontSize: 12,
+                    // Badge(
+                    //   label: Text(
+                    //     subTitle,
+                    //     style: TextStyle().copyWith(
+                    //       fontWeight: FontWeight.bold,
+                    //     ),
                     //   ),
+
+                    //   textColor:
+                    //       textColor ??
+                    //       Theme.of(context).colorScheme.surfaceContainer,
+                    //   backgroundColor:
+                    //       badgeColor ?? Theme.of(context).colorScheme.primary,
+                    //   // child: Text(subTitle),
                     // ),
+                    Text(
+                      subTitle,
+                      style: TextStyle().copyWith(
+                        fontWeight: FontWeight.bold,
+                        color:
+                            badgeColor ?? Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
                   ],
                 ),
                 Icon(Icons.chevron_right),

@@ -61,7 +61,6 @@ ios/Podfile.lock
 # =========================
 # Web
 # =========================
-lib/generated_plugin_registrant.dart
 
 # =========================
 # Desktop (Windows / Linux / macOS)

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <!--
+  <head>
+    <!--
     If you are serving your web app in a path other than the root, change the
     href value below to reflect the base path you are serving from.
 
@@ -14,25 +14,125 @@
     This is a placeholder for base href that will be replaced by the value of
     the `--base-href` argument provided to `flutter build`.
   -->
-  <base href="$FLUTTER_BASE_HREF">
+    <base href="$FLUTTER_BASE_HREF" />
 
-  <meta charset="UTF-8">
-  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="A new Flutter project.">
+    <meta charset="UTF-8" />
+    <meta content="IE=Edge" http-equiv="X-UA-Compatible" />
+    <meta name="description" content="一个AI助力的答题平台" />
 
-  <!-- iOS meta tags & icons -->
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="exam_master_flutter">
-  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+    <!-- iOS meta tags & icons -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-title" content="海邦问答" />
+    <link rel="apple-touch-icon" href="icons/Icon-192.png" />
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png"/>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon.png" />
 
-  <title>exam_master_flutter</title>
-  <link rel="manifest" href="manifest.json">
-</head>
-<body>
-  <script src="flutter_bootstrap.js" async></script>
-</body>
+    <title>海邦问答</title>
+    <link rel="manifest" href="manifest.json" />
+    <style>
+      /* 1. 基础样式：居中、全屏 */
+      #loading-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #f5f5f5;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+
+        /* 🔥 关键：定义透明度的过渡动画 */
+        transition: opacity 0.6s ease-out;
+        opacity: 1; /* 初始状态是完全不透明 */
+      }
+
+      /* 2. 消失样式：当加上这个类时，变成透明 */
+      #loading-container.fade-out {
+        opacity: 0;
+        pointer-events: none; /* 变成透明后，鼠标可以直接穿透，点击到下面的 Flutter App */
+      }
+
+      /* 旋转动画 */
+      .spinner {
+        width: 50px;
+        height: 50px;
+        border: 5px solid #e0e0e0;
+        border-top: 5px solid #3498db;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+
+      .loading-text {
+        margin-top: 20px;
+        color: #555;
+        font-family: sans-serif;
+        font-size: 16px;
+        animation: pulse 1.5s ease-in-out infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+      @keyframes pulse {
+        0% {
+          opacity: 0.6;
+        }
+        50% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0.6;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="loading-container">
+      <div class="spinner"></div>
+      <div class="loading-text">海邦问答正在启动...</div>
+    </div>
+    <script src="flutter_bootstrap.js" async></script>
+    <script>
+      // 定义一个观察者，监视 body 元素的变化
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          // 检查是否有新节点被添加
+          mutation.addedNodes.forEach((node) => {
+            // Flutter Web 渲染出来的根标签通常是 flutter-view (新版) 或 flt-glass-pane (旧版)
+            if (
+              node.tagName === "FLUTTER-VIEW" ||
+              node.tagName === "FLT-GLASS-PANE"
+            ) {
+              // 找到了！说明 Flutter 画面已经出来了
+              const loader = document.getElementById("loading-container");
+              if (loader) {
+                // 执行淡出动画
+                loader.classList.add("fade-out");
+                // 0.6秒后彻底移除 DOM
+                setTimeout(() => {
+                  loader.remove();
+                }, 600);
+              }
+
+              // 任务完成，停止观察，释放资源
+              observer.disconnect();
+            }
+          });
+        });
+      });
+
+      // 开始监视 document.body 的子节点变化
+      observer.observe(document.body, { childList: true });
+    </script>
+  </body>
 </html>

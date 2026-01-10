@@ -45,9 +45,19 @@ class _DesktopScaffoldWithNavigationbar
             ),
             destinations: items.map((items) {
               return NavigationRailDestination(
-                icon: Icon(items.icon),
+                icon: items.badgeTitle != null
+                    ? Badge(
+                        label: Text(items.badgeTitle ?? ''),
+                        child: Icon(items.icon),
+                      )
+                    : Icon(items.icon),
                 label: Text(items.label),
-                selectedIcon: Icon(items.selectedIcon),
+                selectedIcon: items.badgeTitle != null
+                    ? Badge(
+                        label: Text(items.badgeTitle ?? ''),
+                        child: Icon(items.selectedIcon),
+                      )
+                    : Icon(items.selectedIcon),
               );
             }).toList(),
           ),

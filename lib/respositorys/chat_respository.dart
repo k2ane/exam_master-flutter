@@ -5,9 +5,9 @@ import 'package:http/http.dart' as http;
 
 class ChatRespository {
   // API key
-  final String apiKey = 'app-zVDPKbSPGl2WC0dhLztQghGR';
+  final String apiKey = 'app-7vjpim82Ng4DKKuoFWJ2q2fU';
   // API 地址
-  final String baseUrl = 'http://localhost/v1';
+  final String baseUrl = 'http://jp-2.frp.one:41946/v1';
   // 流式消息
   /// 发送流式消息
   /// [query]: 用户输入的问题

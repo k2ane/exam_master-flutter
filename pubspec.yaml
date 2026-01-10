@@ -1,5 +1,5 @@
 name: exam_master_flutter
-description: "A new Flutter project."
+description: "一个AI助力的答题平台"
 
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 #版本号每次更新需要修改最后一位数字+1
@@ -27,9 +27,12 @@ dependencies:
   flutter_secure_storage: ^10.0.0
   # 加载动画
   flutter_easyloading: ^3.0.5
+  # http网络库 - 发送Stream请求
   http: ^1.6.0
   # 聊天ui库
   dash_chat_2: ^0.0.20
+  # Markdown与html渲染库
+  markdown: ^7.3.0
 
 dev_dependencies:
   flutter_test:
