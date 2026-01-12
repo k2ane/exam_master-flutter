@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
 class ProfileView extends ConsumerStatefulWidget {
@@ -29,14 +30,13 @@ class _ProfileView extends ConsumerState<ProfileView> {
                     children: [
                       CircleAvatar(
                         radius: 25,
-                        child: Text(
-                          'J',
-                          style: TextStyle().copyWith(fontSize: 25),
+                        child: SvgPicture.network(
+                          'https://api.dicebear.com/9.x/adventurer/svg?seed=Sara',
                         ),
                       ),
                       SizedBox(width: 8),
                       Text(
-                        'JhonAppleSeed',
+                        'JohnAppleSeed',
                         style: TextStyle().copyWith(
                           fontSize: 32,
                           // fontWeight: FontWeight.bold,
@@ -48,9 +48,9 @@ class _ProfileView extends ConsumerState<ProfileView> {
                   Row(
                     children: [
                       Chip(
-                        avatar: Icon(Icons.email_outlined),
+                        avatar: Icon(Icons.workspace_premium_outlined),
                         label: Text(
-                          'jhonappleseed@icloud.com',
+                          '高级会员',
                           style: TextStyle().copyWith(fontSize: 12),
                         ),
                       ),

@@ -2,6 +2,7 @@ import 'package:exam_master_flutter/views/example_view.dart';
 import 'package:exam_master_flutter/views/widgets/arena_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/svg.dart';
 
 class ArenaView extends ConsumerWidget {
   const ArenaView({super.key});
@@ -16,11 +17,11 @@ class ArenaView extends ConsumerWidget {
         actions: [
           IconButton.filled(
             color: Theme.of(context).colorScheme.onPrimary,
-            tooltip: '添加功能',
+            tooltip: '关于我',
             onPressed: () => {},
-            icon: Icon(
-              Icons.add,
-              // color: Theme.of(context).colorScheme.onPrimary,
+            icon: SvgPicture.network(
+              'https://api.dicebear.com/9.x/adventurer/svg?seed=Sara',
+              width: 28,
             ),
           ),
         ],

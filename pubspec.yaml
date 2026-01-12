@@ -33,6 +33,8 @@ dependencies:
   dash_chat_2: ^0.0.20
   # Markdown与html渲染库
   markdown: ^7.3.0
+  # svg支持
+  flutter_svg: ^2.2.3
 
 dev_dependencies:
   flutter_test:

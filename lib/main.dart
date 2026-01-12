@@ -23,7 +23,15 @@ void main() {
       statusBarIconBrightness: Brightness.dark, // 黑色图标 (因为你的背景是浅粉色)
     ),
   );
-  runApp(const ProviderScope(child: ExamApp()));
+  WidgetsFlutterBinding.ensureInitialized(); // 必须加上这一行
+
+  // 设置只允许竖屏 (向上或向下)
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]).then((_) {
+    runApp(const ProviderScope(child: ExamApp()));
+  });
 }
 
 class ExamApp extends ConsumerWidget {

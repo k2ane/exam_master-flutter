@@ -27,7 +27,7 @@ final List<NavigationbarItem> navConfig = [
   ),
   NavigationbarItem(
     label: '海邦助手',
-    badgeTitle: 'Demo',
+    badgeTitle: 'Alpha',
     icon: Icons.support_agent_outlined,
     selectedIcon: Icons.support_agent,
   ),

@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:exam_master_flutter/respositorys/chat_respository.dart';
 import 'package:flutter/material.dart';
@@ -133,12 +132,12 @@ class _ChatView extends ConsumerState<ChatView> {
           sendButtonBuilder: (send) {
             return Padding(
               padding: const EdgeInsets.only(left: 8),
-              child: FilledButton(onPressed: send, child: Text('发送')),
+              child: FilledButton(onPressed: null, child: Text('发送')),
             );
           },
           inputToolbarPadding: EdgeInsets.all(16),
           inputDecoration: InputDecoration(
-            label: Text('请输入问题'),
+            label: Text('服务暂未提供'),
             border: UnderlineInputBorder(),
           ),
         ),
