@@ -1,4 +1,5 @@
 import 'package:exam_master_flutter/providers/auth_state_provider.dart';
+import 'package:exam_master_flutter/views/widgets/user_info_card_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -19,57 +20,7 @@ class _ProfileView extends ConsumerState<ProfileView> {
       body: ListView(
         padding: EdgeInsets.all(16.0),
         children: [
-          Card(
-            margin: EdgeInsets.all(0),
-            child: ListTile(
-              contentPadding: EdgeInsets.only(top: 8, left: 16, right: 16),
-              title: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      CircleAvatar(
-                        radius: 25,
-                        child: SvgPicture.network(
-                          'https://api.dicebear.com/9.x/adventurer/svg?seed=Sara',
-                        ),
-                      ),
-                      SizedBox(width: 8),
-                      Text(
-                        'JohnAppleSeed',
-                        style: TextStyle().copyWith(
-                          fontSize: 32,
-                          // fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 8),
-                  Row(
-                    children: [
-                      Chip(
-                        avatar: Icon(Icons.workspace_premium_outlined),
-                        label: Text(
-                          '高级会员',
-                          style: TextStyle().copyWith(fontSize: 12),
-                        ),
-                      ),
-                      SizedBox(width: 4),
-                      Chip(
-                        avatar: Icon(Icons.people_outlined),
-                        label: Text(
-                          '员工',
-                          style: TextStyle().copyWith(fontSize: 12),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
+          UserInfoCardWidget(),
           SizedBox(height: 12),
           Card(
             margin: EdgeInsets.all(0),

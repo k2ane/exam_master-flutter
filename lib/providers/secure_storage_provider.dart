@@ -23,9 +23,30 @@ class SecureStorageProvider {
     await _storage.write(key: _userEmail, value: email);
   }
 
+  // 读取用户邮箱
+  Future<String?> getUserEmail() async {
+    return await _storage.read(key: _userEmail);
+  }
+
+  // 删除用户邮箱
+  Future<void> clearUserEmail() async {
+    return await _storage.delete(key: _userEmail);
+  }
+
   // 存储用户id
   Future<void> setUserId(String id) async {
     await _storage.write(key: _userId, value: id);
+  }
+
+  // 读取用户id
+  Future<String?> getUserId() async {
+    return await _storage.read(key: _userId);
+  }
+
+  // 删除用户id
+
+  Future<void> clearUserId() async {
+    return await _storage.delete(key: _userId);
   }
 
   // 存储token

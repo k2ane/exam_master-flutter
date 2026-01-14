@@ -33,7 +33,7 @@ class _LoginView extends ConsumerState<LoginView> {
     final login = ref.read(authRepositoryProvider);
     final globalEmail = ref.read(globalEmailProvider.notifier);
     final authState = ref.read(authStateProvider.notifier);
-
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return LayoutBuilder(
       builder: (context, constraints) {
         return GestureDetector(
@@ -52,19 +52,44 @@ class _LoginView extends ConsumerState<LoginView> {
                       ? MainAxisAlignment.center
                       : MainAxisAlignment.start,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Text('认证', style: TextStyle().copyWith(fontSize: 48)),
-                        Text(
-                          '以继续使用该系统',
-                          style: TextStyle().copyWith(
-                            fontSize: 16,
-                            color: Colors.black.withAlpha(150),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              isEmailSend == false ? '认证' : '验证码',
+                              style: TextStyle().copyWith(fontSize: 48),
+                            ),
+                            Text(
+                              isEmailSend == false
+                                  ? '以继续使用该系统'
+                                  : '输入发送到邮箱的6位数字验证码',
+                              style: TextStyle().copyWith(
+                                fontSize: 16,
+                                color: isDark
+                                    ? Colors.white.withAlpha(150)
+                                    : Colors.black.withAlpha(150),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Offstage(
+                          offstage: isEmailSend == false ? true : false,
+                          child: TextButton(
+                            onPressed: () => {
+                              setState(() {
+                                isEmailSend = !isEmailSend;
+                              }),
+                            },
+                            child: Text('返回修改邮箱'),
                           ),
                         ),
                       ],
                     ),
+
                     SizedBox(height: 36.0),
                     Offstage(
                       offstage: isEmailSend == true ? false : true,
@@ -123,6 +148,7 @@ class _LoginView extends ConsumerState<LoginView> {
                         child: FilledButton(
                           onPressed: () async {
                             if (_emailFormKey.currentState!.validate()) {
+                              EasyLoading.show();
                               globalEmail.state = _emailController.text;
                               try {
                                 final data = await login
@@ -130,6 +156,7 @@ class _LoginView extends ConsumerState<LoginView> {
                                       _emailController.text,
                                     );
                                 if (context.mounted) {
+                                  EasyLoading.dismiss();
                                   showMessage(
                                     Colors.green.shade600,
                                     data.content['message'],
@@ -142,6 +169,7 @@ class _LoginView extends ConsumerState<LoginView> {
                                 }
                               } catch (e) {
                                 if (context.mounted) {
+                                  EasyLoading.dismiss();
                                   showMessage(
                                     Colors.red.shade600,
                                     e.toString(),
