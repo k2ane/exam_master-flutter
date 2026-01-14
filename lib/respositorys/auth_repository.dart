@@ -12,7 +12,13 @@ class AuthRepository {
 
   Future<EmailResponse> sendEmailVerificationCode(String email) async {
     final sendData = {'email': email};
-    final response = await _client.post('/auth/verification', data: sendData);
+    final response = await _client.get('/auth/login', data: sendData);
     return EmailResponse.fromJson(response);
+  }
+
+  Future<LoginResponse> sigIn(String email, String passcode) async {
+    final sendData = {'email': email, 'passcode': passcode};
+    final response = await _client.post('/auth/login', data: sendData);
+    return LoginResponse.fromJson(response);
   }
 }

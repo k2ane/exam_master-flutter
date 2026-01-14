@@ -1,3 +1,4 @@
+import 'package:exam_master_flutter/providers/auth_state_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -12,6 +13,7 @@ class ProfileView extends ConsumerStatefulWidget {
 class _ProfileView extends ConsumerState<ProfileView> {
   @override
   Widget build(BuildContext context) {
+    final authState = ref.read(authStateProvider.notifier);
     return Scaffold(
       appBar: AppBar(title: Text('个人资料'), centerTitle: false),
       body: ListView(
@@ -122,6 +124,24 @@ class _ProfileView extends ConsumerState<ProfileView> {
                 '查看您的助手使用情况',
                 style: TextStyle().copyWith(fontSize: 12),
               ),
+              trailing: Icon(Icons.chevron_right_outlined),
+            ),
+          ),
+          SizedBox(height: 8),
+          Card(
+            margin: EdgeInsets.all(0),
+            clipBehavior: Clip.antiAlias,
+            child: ListTile(
+              onTap: () {
+                authState.logout();
+              },
+              leading: CircleAvatar(
+                backgroundColor: Colors.orange,
+                foregroundColor: Colors.white,
+                child: Icon(Icons.support_agent),
+              ),
+              title: Text('退出'),
+              subtitle: Text('退出登陆', style: TextStyle().copyWith(fontSize: 12)),
               trailing: Icon(Icons.chevron_right_outlined),
             ),
           ),

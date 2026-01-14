@@ -26,10 +26,10 @@ final List<NavigationbarItem> navConfig = [
     selectedIcon: Icons.leaderboard,
   ),
   NavigationbarItem(
-    label: '海邦助手',
-    badgeTitle: 'Alpha',
-    icon: Icons.support_agent_outlined,
-    selectedIcon: Icons.support_agent,
+    label: '兑换奖品',
+    // badgeTitle: '100',
+    icon: Icons.redeem_outlined,
+    selectedIcon: Icons.redeem,
   ),
   NavigationbarItem(
     label: '个人资料',

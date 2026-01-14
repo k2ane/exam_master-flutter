@@ -13,14 +13,17 @@ class AuthState extends AsyncNotifier<bool> {
   }
 
   // 登录成功
-  Future<void> loginSuccess(String token) async {
+  Future<void> loginSuccess(String token, String email, String id) async {
     await ref.read(secureStorageProvider).setToken(token);
+    await ref.read(secureStorageProvider).setUserEmail(email);
+    await ref.read(secureStorageProvider).setUserId(id);
     state = const AsyncValue.data(true);
   }
 
   //退出登录
   Future<void> logout() async {
-    await ref.read(secureStorageProvider).clearToken();
+    // await ref.read(secureStorageProvider).clearToken();
+    await ref.read(secureStorageProvider).clearAll();
     state = const AsyncValue.data(false);
   }
 }

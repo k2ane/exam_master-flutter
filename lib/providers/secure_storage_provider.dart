@@ -12,9 +12,22 @@ class SecureStorageProvider {
     _storage = FlutterSecureStorage(aOptions: AndroidOptions());
   }
 
-  static const String _tokenKey = 'auth_token';
+  static const String _tokenKey = 'auth_token'; // 用户token
+  static const String _userEmail = 'user_email'; // 用户邮箱
+  static const String _userId = "user_id"; // 用户id
 
   // 暴露方法给全局
+
+  // 存储用户邮箱
+  Future<void> setUserEmail(String email) async {
+    await _storage.write(key: _userEmail, value: email);
+  }
+
+  // 存储用户id
+  Future<void> setUserId(String id) async {
+    await _storage.write(key: _userId, value: id);
+  }
+
   // 存储token
   Future<void> setToken(String token) async {
     await _storage.write(key: _tokenKey, value: token);

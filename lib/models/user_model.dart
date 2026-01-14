@@ -1,31 +1,31 @@
 class EmailResponse {
   final String status;
-  final String message;
-  EmailResponse({required this.status, required this.message});
+  final Map<String, dynamic> content;
+  EmailResponse({required this.status, required this.content});
   factory EmailResponse.fromJson(Map<String, dynamic> json) {
     return EmailResponse(
       status: json['status'] as String,
-      message: json['message'] as String,
+      content: json['content'] as Map<String, dynamic>,
     );
   }
   Map<String, dynamic> toJson() {
-    return {'status': status, 'message': message};
+    return {'status': status, 'content': content};
   }
 }
 
 class LoginResponse {
   final String status;
-  final String token;
-  LoginResponse({required this.status, required this.token});
+  final Map<String, dynamic> content;
+  LoginResponse({required this.status, required this.content});
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) {
     return LoginResponse(
       status: json['status'] as String,
-      token: json['token'] as String,
+      content: json['content'] as Map<String, dynamic>,
     );
   }
 
   Map<String, dynamic> toJson() {
-    return {'status': status, 'token': token};
+    return {'status': status, 'content': content};
   }
 }

@@ -12,7 +12,7 @@ final dioProvider = Provider<Dio>((ref) {
   // Dio配置
   final options = BaseOptions(
     // 特殊配置安卓模拟器访问本地localhost地址 10.0.2.2
-    baseUrl: 'https://quiz.bondex.fit/api/v1',
+    baseUrl: 'http://127.0.0.1:3000/api/v1',
     connectTimeout: Duration(seconds: 10),
     receiveTimeout: Duration(seconds: 10),
     contentType: Headers.jsonContentType,
@@ -45,9 +45,9 @@ class DioClient {
   final Dio dio;
   DioClient(this.dio);
   // Get方法
-  Future<dynamic> get(String path) async {
+  Future<dynamic> get(String path, {Object? data}) async {
     try {
-      final response = await dio.get(path);
+      final response = await dio.get(path, data: data);
       return response.data;
     } on DioException catch (e) {
       throw handleError(e);
@@ -83,8 +83,8 @@ class DioClient {
           return ApiException('error', '未授权或登录过期');
         }
         // 读取后端返回的错误信息
-        if (errorData is Map && errorData['message'] != null) {
-          errorDescription = errorData['message'];
+        if (errorData is Map && errorData['content']['message'] != null) {
+          errorDescription = errorData['content']['message'];
         } else {
           errorDescription = '服务器错误 ($stateCode)';
         }
