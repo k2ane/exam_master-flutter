@@ -16,8 +16,24 @@ class SecureStorageProvider {
   static const String _userEmail = 'user_email'; // 用户邮箱
   static const String _userId = "user_id"; // 用户id
   static const String _userName = 'user_name'; // 用户显示名称
+  static const String _userRole = 'user_role'; // 用户角色
 
   // 暴露方法给全局
+
+  // 存储用户角色
+  Future<void> setUserRole(String role) async {
+    await _storage.write(key: _userRole, value: role);
+  }
+
+  //读取用户角色
+  Future<String?> getUserRole() async {
+    return await _storage.read(key: _userRole);
+  }
+
+  // 删除用户角色
+  Future<void> clearUserRole() async {
+    return await _storage.delete(key: _userRole);
+  }
 
   // 存储用户显示名称
   Future<void> setUserName(String username) async {

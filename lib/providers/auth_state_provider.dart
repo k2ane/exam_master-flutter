@@ -13,17 +13,39 @@ class AuthState extends AsyncNotifier<bool> {
     return token != null && token.isNotEmpty;
   }
 
+  // 设置安全存储值
+  Future<void> setSecureStorage(
+    String token,
+    String email,
+    String id,
+    String name,
+    String role,
+  ) async {
+    await ref.read(secureStorageProvider).setToken(token);
+    await ref.read(secureStorageProvider).setUserEmail(email);
+    await ref.read(secureStorageProvider).setUserId(id);
+    await ref.read(secureStorageProvider).setUserName(name);
+    await ref.read(secureStorageProvider).setUserRole(role);
+  }
+
+  // 删除安全存储值
+  Future<void> clearSecureStorage() async {
+    await ref.read(secureStorageProvider).clearToken();
+    await ref.read(secureStorageProvider).clearUserEmail();
+    await ref.read(secureStorageProvider).clearUserId();
+    await ref.read(secureStorageProvider).clearUserName();
+    await ref.read(secureStorageProvider).clearUserRole();
+  }
+
   // 登录成功
   Future<void> loginSuccess(
     String token,
     String email,
     String id,
     String name,
+    String role,
   ) async {
-    await ref.read(secureStorageProvider).setToken(token);
-    await ref.read(secureStorageProvider).setUserEmail(email);
-    await ref.read(secureStorageProvider).setUserId(id);
-    await ref.read(secureStorageProvider).setUserName(name);
+    await setSecureStorage(token, email, id, name, role);
     ref.invalidate(userInfoProvider);
     state = const AsyncValue.data(true);
   }
@@ -34,21 +56,16 @@ class AuthState extends AsyncNotifier<bool> {
     String email,
     String id,
     String name,
+    String role,
   ) async {
-    await ref.read(secureStorageProvider).setToken(token);
-    await ref.read(secureStorageProvider).setUserEmail(email);
-    await ref.read(secureStorageProvider).setUserId(id);
-    await ref.read(secureStorageProvider).setUserName(name);
+    await setSecureStorage(token, email, id, name, role);
     ref.invalidate(userInfoProvider);
     state = const AsyncValue.data(true);
   }
 
   //退出登录
   Future<void> logout() async {
-    await ref.read(secureStorageProvider).clearToken();
-    await ref.read(secureStorageProvider).clearUserEmail();
-    await ref.read(secureStorageProvider).clearUserId();
-    await ref.read(secureStorageProvider).clearUserName();
+    await clearSecureStorage();
     ref.invalidate(userInfoProvider);
     // await ref.read(secureStorageProvider).clearAll();
     state = const AsyncValue.data(false);

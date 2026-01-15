@@ -22,8 +22,9 @@ class _PhoneScaffoldWithNavigationbar
     extends ConsumerState<PhoneScaffoldWithNavigationbar> {
   @override
   Widget build(BuildContext context) {
-    final storage = ref.read(secureStorageProvider);
-    final authState = ref.read(authRepositoryProvider);
+    final storageP = ref.read(secureStorageProvider);
+    final authRP = ref.read(authRepositoryProvider);
+    final authState = ref.read(authStateProvider.notifier);
     final List<NavigationbarItem> items = navConfig;
     return Scaffold(
       body: widget.navigationShell,
@@ -34,13 +35,28 @@ class _PhoneScaffoldWithNavigationbar
             value,
             initialLocation: value == widget.navigationShell.currentIndex,
           );
-          final token = await storage.getToken();
-          final response = await authState.checkLoginState(token as String);
-          if (context.mounted) {
-            ScaffoldMessenger.of(context).clearSnackBars();
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('${response.content['message']}')),
-            );
+          try {
+            final token = await storageP.getToken();
+            final response = await authRP.checkLoginState(token as String);
+            if (response.status != 'success') {
+              authState.logout();
+            } else {
+              authState.checkLoginState(
+                token,
+                response.content['email'],
+                response.content['id'],
+                response.content['name'],
+                response.content['role'],
+              );
+            }
+          } catch (e) {
+            authState.logout();
+            if (context.mounted) {
+              ScaffoldMessenger.of(context).clearSnackBars();
+              ScaffoldMessenger.of(
+                context,
+              ).showSnackBar(SnackBar(content: Text('错误: $e')));
+            }
           }
         },
         destinations: items.map((items) {

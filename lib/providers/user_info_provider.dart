@@ -7,7 +7,13 @@ class UserInfo {
   final String email;
   final String id;
   final String name;
-  UserInfo({required this.email, required this.id, required this.name});
+  final String role;
+  UserInfo({
+    required this.email,
+    required this.id,
+    required this.name,
+    required this.role,
+  });
 }
 
 final userInfoProvider = AsyncNotifierProvider<UserInfoNotifier, UserInfo>(() {
@@ -20,10 +26,12 @@ class UserInfoNotifier extends AsyncNotifier<UserInfo> {
     final userEmail = await ref.read(secureStorageProvider).getUserEmail();
     final userId = await ref.read(secureStorageProvider).getUserId();
     final userName = await ref.read(secureStorageProvider).getUserName();
+    final userRole = await ref.read(secureStorageProvider).getUserRole();
     final userInfo = UserInfo(
       email: userEmail as String,
       id: userId as String,
       name: userName as String,
+      role: userRole as String,
     );
     return userInfo;
   }

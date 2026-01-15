@@ -1,7 +1,9 @@
 import 'package:exam_master_flutter/providers/auth_state_provider.dart';
 import 'package:exam_master_flutter/views/widgets/profile_setting_card_widget.dart';
+import 'package:exam_master_flutter/views/widgets/settings_edit_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class SettingsTemplate extends ConsumerWidget {
   final String pageTitle;
@@ -22,6 +24,10 @@ class SettingsTemplate extends ConsumerWidget {
               icon: Icon(Icons.person_outline),
               iconBackground: Colors.teal,
               iconForeground: Colors.white,
+              ontap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SettingsEditProfile()),
+              ),
             ),
             SizedBox(height: 8),
             ProfileSettingCardWidget(

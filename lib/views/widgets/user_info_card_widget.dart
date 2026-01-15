@@ -28,7 +28,9 @@ class UserInfoCardWidget extends ConsumerWidget {
                   ),
                   SizedBox(width: 8),
                   Text(
-                    data.name,
+                    data.name.length > 10
+                        ? '${data.name.replaceRange(10, null, '')}...'
+                        : data.name,
                     style: TextStyle().copyWith(
                       fontSize: 32,
                       // fontWeight: FontWeight.bold,
@@ -37,20 +39,21 @@ class UserInfoCardWidget extends ConsumerWidget {
                 ],
               ),
               SizedBox(height: 8),
-              Row(
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Chip(
-                    avatar: Icon(Icons.public_outlined),
-                    label: Text(
-                      data.id,
-                      style: TextStyle().copyWith(fontSize: 12),
-                    ),
-                  ),
-                  SizedBox(width: 4),
+                  // Chip(
+                  //   avatar: Icon(Icons.public_outlined),
+                  //   label: Text(
+                  //     data.id,
+                  //     style: TextStyle().copyWith(fontSize: 12),
+                  //   ),
+                  // ),
+                  // SizedBox(width: 4),
                   Chip(
                     avatar: Icon(Icons.groups_outlined),
                     label: Text(
-                      '员工',
+                      data.role == '1' ? '管理员' : '学员',
                       style: TextStyle().copyWith(fontSize: 12),
                     ),
                   ),

@@ -208,29 +208,28 @@ class _LoginView extends ConsumerState<LoginView> {
                                   _emailController.text,
                                   _passcodeController.text,
                                 );
-                                if (context.mounted) {
-                                  if (data.status == 'success' &&
-                                      data.content['token']
-                                          .toString()
-                                          .isNotEmpty) {
-                                    await EasyLoading.dismiss();
-                                    authState.loginSuccess(
-                                      data.content['token'],
-                                      data.content['email'],
-                                      data.content['id'],
-                                      data.content['name'],
+                                if (data.status == 'success' &&
+                                    data.content['token']
+                                        .toString()
+                                        .isNotEmpty) {
+                                  await EasyLoading.dismiss();
+                                  authState.loginSuccess(
+                                    data.content['token'],
+                                    data.content['email'],
+                                    data.content['id'],
+                                    data.content['name'],
+                                    data.content['role'],
+                                  );
+                                  if (context.mounted) {
+                                    showMessage(
+                                      Colors.green.shade600,
+                                      data.content['message'],
+                                      context,
+                                      true,
                                     );
-                                    if (context.mounted) {
-                                      showMessage(
-                                        Colors.green.shade600,
-                                        data.content['message'],
-                                        context,
-                                        true,
-                                      );
-                                    }
-                                    if (context.mounted) {
-                                      context.go('/');
-                                    }
+                                  }
+                                  if (context.mounted) {
+                                    context.go('/');
                                   }
                                 }
                               } catch (e) {
@@ -240,7 +239,7 @@ class _LoginView extends ConsumerState<LoginView> {
                                 if (context.mounted) {
                                   showMessage(
                                     Colors.red.shade600,
-                                    e.toString(),
+                                    '$e',
                                     context,
                                     false,
                                   );
