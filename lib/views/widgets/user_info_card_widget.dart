@@ -28,7 +28,7 @@ class UserInfoCardWidget extends ConsumerWidget {
                   ),
                   SizedBox(width: 8),
                   Text(
-                    data.email,
+                    data.name,
                     style: TextStyle().copyWith(
                       fontSize: 32,
                       // fontWeight: FontWeight.bold,
@@ -40,7 +40,7 @@ class UserInfoCardWidget extends ConsumerWidget {
               Row(
                 children: [
                   Chip(
-                    avatar: Icon(Icons.workspace_premium_outlined),
+                    avatar: Icon(Icons.public_outlined),
                     label: Text(
                       data.id,
                       style: TextStyle().copyWith(fontSize: 12),
@@ -48,7 +48,7 @@ class UserInfoCardWidget extends ConsumerWidget {
                   ),
                   SizedBox(width: 4),
                   Chip(
-                    avatar: Icon(Icons.people_outlined),
+                    avatar: Icon(Icons.groups_outlined),
                     label: Text(
                       '员工',
                       style: TextStyle().copyWith(fontSize: 12),

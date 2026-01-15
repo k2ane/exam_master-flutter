@@ -6,7 +6,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class UserInfo {
   final String email;
   final String id;
-  UserInfo({required this.email, required this.id});
+  final String name;
+  UserInfo({required this.email, required this.id, required this.name});
 }
 
 final userInfoProvider = AsyncNotifierProvider<UserInfoNotifier, UserInfo>(() {
@@ -18,7 +19,12 @@ class UserInfoNotifier extends AsyncNotifier<UserInfo> {
   FutureOr<UserInfo> build() async {
     final userEmail = await ref.read(secureStorageProvider).getUserEmail();
     final userId = await ref.read(secureStorageProvider).getUserId();
-    final userInfo = UserInfo(email: userEmail as String, id: userId as String);
+    final userName = await ref.read(secureStorageProvider).getUserName();
+    final userInfo = UserInfo(
+      email: userEmail as String,
+      id: userId as String,
+      name: userName as String,
+    );
     return userInfo;
   }
 }

@@ -14,10 +14,31 @@ class AuthState extends AsyncNotifier<bool> {
   }
 
   // 登录成功
-  Future<void> loginSuccess(String token, String email, String id) async {
+  Future<void> loginSuccess(
+    String token,
+    String email,
+    String id,
+    String name,
+  ) async {
     await ref.read(secureStorageProvider).setToken(token);
     await ref.read(secureStorageProvider).setUserEmail(email);
     await ref.read(secureStorageProvider).setUserId(id);
+    await ref.read(secureStorageProvider).setUserName(name);
+    ref.invalidate(userInfoProvider);
+    state = const AsyncValue.data(true);
+  }
+
+  // 检查登录状态并刷新
+  Future<void> checkLoginState(
+    String token,
+    String email,
+    String id,
+    String name,
+  ) async {
+    await ref.read(secureStorageProvider).setToken(token);
+    await ref.read(secureStorageProvider).setUserEmail(email);
+    await ref.read(secureStorageProvider).setUserId(id);
+    await ref.read(secureStorageProvider).setUserName(name);
     ref.invalidate(userInfoProvider);
     state = const AsyncValue.data(true);
   }
@@ -27,6 +48,7 @@ class AuthState extends AsyncNotifier<bool> {
     await ref.read(secureStorageProvider).clearToken();
     await ref.read(secureStorageProvider).clearUserEmail();
     await ref.read(secureStorageProvider).clearUserId();
+    await ref.read(secureStorageProvider).clearUserName();
     ref.invalidate(userInfoProvider);
     // await ref.read(secureStorageProvider).clearAll();
     state = const AsyncValue.data(false);

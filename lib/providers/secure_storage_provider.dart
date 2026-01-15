@@ -15,8 +15,24 @@ class SecureStorageProvider {
   static const String _tokenKey = 'auth_token'; // 用户token
   static const String _userEmail = 'user_email'; // 用户邮箱
   static const String _userId = "user_id"; // 用户id
+  static const String _userName = 'user_name'; // 用户显示名称
 
   // 暴露方法给全局
+
+  // 存储用户显示名称
+  Future<void> setUserName(String username) async {
+    await _storage.write(key: _userName, value: username);
+  }
+
+  // 读取用户显示名称
+  Future<String?> getUserName() async {
+    return await _storage.read(key: _userName);
+  }
+
+  // 删除用户显示名称
+  Future<void> clearUserName() async {
+    await _storage.delete(key: _userName);
+  }
 
   // 存储用户邮箱
   Future<void> setUserEmail(String email) async {

@@ -1,6 +1,7 @@
-import 'dart:async';
-
 import 'package:exam_master_flutter/providers/auth_state_provider.dart';
+import 'package:exam_master_flutter/providers/http_cilent_provider.dart';
+import 'package:exam_master_flutter/providers/secure_storage_provider.dart';
+import 'package:exam_master_flutter/respositorys/auth_repository.dart';
 import 'package:exam_master_flutter/views/arena_view.dart';
 import 'package:exam_master_flutter/views/dashboard_view.dart';
 import 'package:exam_master_flutter/views/exam/sequential_exam_view.dart';
@@ -21,7 +22,7 @@ final routerProvider = Provider<GoRouter>((ref) {
   final authNotifier = AuthListener(ref);
   return GoRouter(
     debugLogDiagnostics: true, // 调试模式下显示路由状态
-    initialLocation: '/login', // 默认路由页面
+    initialLocation: '/', // 默认路由页面
     refreshListenable: authNotifier,
     redirect: (context, state) {
       // 获取全局登陆状态
@@ -95,9 +96,9 @@ final routerProvider = Provider<GoRouter>((ref) {
                 builder: (context, state) => const ProfileView(),
                 routes: [
                   GoRoute(
-                    path: '/account',
+                    path: '/settings',
                     builder: (context, state) =>
-                        const SettingsTemplate(pageTitle: '账户管理'),
+                        const SettingsTemplate(pageTitle: '设置'),
                   ),
                   GoRoute(
                     path: '/license',
@@ -121,7 +122,7 @@ final routerProvider = Provider<GoRouter>((ref) {
 
 class AuthListener extends ChangeNotifier {
   AuthListener(Ref ref) {
-    // 🔥 核心：在这里使用 ref.listen 监听 authStateProvider
+    // 在这里使用 ref.listen 监听 authStateProvider
     // 每当 authStateProvider 状态发生变化时，调用 notifyListeners()
     ref.listen<AsyncValue<bool>>(authStateProvider, (previous, next) {
       notifyListeners();

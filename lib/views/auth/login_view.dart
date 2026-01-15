@@ -52,42 +52,45 @@ class _LoginView extends ConsumerState<LoginView> {
                       ? MainAxisAlignment.center
                       : MainAxisAlignment.start,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              isEmailSend == false ? '认证' : '验证码',
-                              style: TextStyle().copyWith(fontSize: 48),
-                            ),
-                            Text(
-                              isEmailSend == false
-                                  ? '以继续使用该系统'
-                                  : '输入发送到邮箱的6位数字验证码',
-                              style: TextStyle().copyWith(
-                                fontSize: 16,
-                                color: isDark
-                                    ? Colors.white.withAlpha(150)
-                                    : Colors.black.withAlpha(150),
+                    Padding(
+                      padding: const EdgeInsetsGeometry.only(top: 48),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                isEmailSend == false ? '认证' : '验证码',
+                                style: TextStyle().copyWith(fontSize: 48),
                               ),
-                            ),
-                          ],
-                        ),
-                        Offstage(
-                          offstage: isEmailSend == false ? true : false,
-                          child: TextButton(
-                            onPressed: () => {
-                              setState(() {
-                                isEmailSend = !isEmailSend;
-                              }),
-                            },
-                            child: Text('返回修改邮箱'),
+                              Text(
+                                isEmailSend == false
+                                    ? '以继续使用该系统'
+                                    : '输入发送到邮箱的6位数字验证码',
+                                style: TextStyle().copyWith(
+                                  fontSize: 16,
+                                  color: isDark
+                                      ? Colors.white.withAlpha(150)
+                                      : Colors.black.withAlpha(150),
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
+                          Offstage(
+                            offstage: isEmailSend == false ? true : false,
+                            child: TextButton(
+                              onPressed: () => {
+                                setState(() {
+                                  isEmailSend = !isEmailSend;
+                                }),
+                              },
+                              child: Text('返回修改邮箱'),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
 
                     SizedBox(height: 36.0),
@@ -215,6 +218,7 @@ class _LoginView extends ConsumerState<LoginView> {
                                       data.content['token'],
                                       data.content['email'],
                                       data.content['id'],
+                                      data.content['name'],
                                     );
                                     if (context.mounted) {
                                       showMessage(

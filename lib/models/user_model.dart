@@ -29,3 +29,20 @@ class LoginResponse {
     return {'status': status, 'content': content};
   }
 }
+
+class CheckStatusResponse {
+  final String status;
+  final Map<String, dynamic> content;
+  CheckStatusResponse({required this.status, required this.content});
+
+  factory CheckStatusResponse.fromJson(Map<String, dynamic> json) {
+    return CheckStatusResponse(
+      status: json['status'] as String,
+      content: json['content'] as Map<String, dynamic>,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {'status': status, 'content': content};
+  }
+}

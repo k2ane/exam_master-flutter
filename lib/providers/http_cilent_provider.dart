@@ -12,7 +12,7 @@ final dioProvider = Provider<Dio>((ref) {
   // Dio配置
   final options = BaseOptions(
     // 特殊配置安卓模拟器访问本地localhost地址 10.0.2.2
-    baseUrl: 'http://127.0.0.1:3000/api/v1',
+    baseUrl: 'http://192.168.0.145:3000/api/v1',
     connectTimeout: Duration(seconds: 10),
     receiveTimeout: Duration(seconds: 10),
     contentType: Headers.jsonContentType,
@@ -27,6 +27,7 @@ final dioProvider = Provider<Dio>((ref) {
       responseBody: kDebugMode,
     ),
   );
+
   // 返回实例
   return dio;
 });
@@ -45,9 +46,9 @@ class DioClient {
   final Dio dio;
   DioClient(this.dio);
   // Get方法
-  Future<dynamic> get(String path, {Object? data}) async {
+  Future<dynamic> get(String path, {Object? data, Options? options}) async {
     try {
-      final response = await dio.get(path, data: data);
+      final response = await dio.get(path, data: data, options: options);
       return response.data;
     } on DioException catch (e) {
       throw handleError(e);
