@@ -1,0 +1,69 @@
+import 'package:exam_master_flutter/views/widgets/navigationbar_item.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+
+class DesktopScaffoldWithNavigationbar extends ConsumerStatefulWidget {
+  final StatefulNavigationShell navigationShell;
+
+  const DesktopScaffoldWithNavigationbar({
+    super.key,
+    required this.navigationShell,
+  });
+
+  @override
+  ConsumerState<DesktopScaffoldWithNavigationbar> createState() =>
+      _DesktopScaffoldWithNavigationbar();
+}
+
+class _DesktopScaffoldWithNavigationbar
+    extends ConsumerState<DesktopScaffoldWithNavigationbar> {
+  @override
+  Widget build(BuildContext context) {
+    final List<NavigationbarItem> items = navConfig;
+    return Scaffold(
+      body: Row(
+        children: [
+          NavigationRail(
+            leading: Column(
+              children: [
+                SizedBox(height: 4),
+                IconButton(
+                  onPressed: () => {},
+                  icon: Icon(Icons.dashboard),
+                  tooltip: '管理后台',
+                ),
+                SizedBox(height: 16),
+              ],
+            ),
+            trailing: SizedBox(height: 4),
+            labelType: NavigationRailLabelType.all,
+            selectedIndex: widget.navigationShell.currentIndex,
+            onDestinationSelected: (value) => widget.navigationShell.goBranch(
+              value,
+              initialLocation: value == widget.navigationShell.currentIndex,
+            ),
+            destinations: items.map((items) {
+              return NavigationRailDestination(
+                icon: items.badgeTitle != null
+                    ? Badge(
+                        label: Text(items.badgeTitle ?? ''),
+                        child: Icon(items.icon),
+                      )
+                    : Icon(items.icon),
+                label: Text(items.label),
+                selectedIcon: items.badgeTitle != null
+                    ? Badge(
+                        label: Text(items.badgeTitle ?? ''),
+                        child: Icon(items.selectedIcon),
+                      )
+                    : Icon(items.selectedIcon),
+              );
+            }).toList(),
+          ),
+          Expanded(flex: 1, child: widget.navigationShell),
+        ],
+      ),
+    );
+  }
+}

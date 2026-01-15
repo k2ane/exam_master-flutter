@@ -1,31 +1,48 @@
 class EmailResponse {
   final String status;
-  final String message;
-  EmailResponse({required this.status, required this.message});
+  final Map<String, dynamic> content;
+  EmailResponse({required this.status, required this.content});
   factory EmailResponse.fromJson(Map<String, dynamic> json) {
     return EmailResponse(
       status: json['status'] as String,
-      message: json['message'] as String,
+      content: json['content'] as Map<String, dynamic>,
     );
   }
   Map<String, dynamic> toJson() {
-    return {'status': status, 'message': message};
+    return {'status': status, 'content': content};
   }
 }
 
 class LoginResponse {
-  final int statusCode;
-  final String token;
-  LoginResponse({required this.statusCode, required this.token});
+  final String status;
+  final Map<String, dynamic> content;
+  LoginResponse({required this.status, required this.content});
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) {
     return LoginResponse(
-      statusCode: json['statusCode'] as int,
-      token: json['token'] as String,
+      status: json['status'] as String,
+      content: json['content'] as Map<String, dynamic>,
     );
   }
 
   Map<String, dynamic> toJson() {
-    return {'statusCode': statusCode, 'toekn': token};
+    return {'status': status, 'content': content};
+  }
+}
+
+class CheckStatusResponse {
+  final String status;
+  final Map<String, dynamic> content;
+  CheckStatusResponse({required this.status, required this.content});
+
+  factory CheckStatusResponse.fromJson(Map<String, dynamic> json) {
+    return CheckStatusResponse(
+      status: json['status'] as String,
+      content: json['content'] as Map<String, dynamic>,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {'status': status, 'content': content};
   }
 }

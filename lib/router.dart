@@ -1,49 +1,131 @@
-import 'package:exam_master_flutter/providers/global_email_provider.dart';
-import 'package:exam_master_flutter/views/example_view.dart';
-import 'package:exam_master_flutter/views/login_view.dart';
-import 'package:exam_master_flutter/views/verification_view.dart';
-import 'package:exam_master_flutter/views/widgets/desktop_layout.dart';
-import 'package:exam_master_flutter/views/widgets/phone_layout.dart';
+import 'package:exam_master_flutter/providers/auth_state_provider.dart';
+import 'package:exam_master_flutter/providers/http_cilent_provider.dart';
+import 'package:exam_master_flutter/providers/secure_storage_provider.dart';
+import 'package:exam_master_flutter/respositorys/auth_repository.dart';
+import 'package:exam_master_flutter/views/arena_view.dart';
+import 'package:exam_master_flutter/views/dashboard_view.dart';
+import 'package:exam_master_flutter/views/exam/sequential_exam_view.dart';
+import 'package:exam_master_flutter/views/auth/login_view.dart';
+import 'package:exam_master_flutter/views/gift_view.dart';
+import 'package:exam_master_flutter/views/leader_board_view.dart';
+import 'package:exam_master_flutter/views/license_view.dart';
+import 'package:exam_master_flutter/views/profile_view.dart';
+import 'package:exam_master_flutter/views/widgets/desktop_scaffold_with_navigationbar.dart';
 import 'package:exam_master_flutter/views/widgets/responsive_layout.dart';
+import 'package:exam_master_flutter/views/widgets/phone_scaffold_with_navigationbar.dart';
+import 'package:exam_master_flutter/views/widgets/settings_template.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final routerProvider = Provider<GoRouter>((ref) {
+  final authNotifier = AuthListener(ref);
   return GoRouter(
-    initialLocation: '/login', // 默认路由页面
-    // 重定向, 每次路由都会经过这里
+    debugLogDiagnostics: true, // 调试模式下显示路由状态
+    initialLocation: '/', // 默认路由页面
+    refreshListenable: authNotifier,
     redirect: (context, state) {
-      if (ref.read(globalEmailProvider).isEmpty) {
+      // 获取全局登陆状态
+      final authState = ref.read(authStateProvider);
+      if (authState.isLoading) return null;
+      if (authState.hasError) return '/login';
+      final bool isLoggedIn = authState.value == true;
+      final bool isLogginIn = state.matchedLocation == '/login';
+
+      if (!isLoggedIn && !isLogginIn) {
         return '/login';
       }
+
+      if (isLogginIn && isLoggedIn) {
+        return '/';
+      }
+
       return null;
     },
-
     // 3. 定义路由表
     routes: [
-      GoRoute(
-        path: '/login',
-        builder: (context, state) => const LoginView(),
-        routes: [
-          GoRoute(
-            path: '/verification',
-            builder: (context, state) => const VerificationView(),
+      // 保留底部导航栏且保留页面状态的路由
+      StatefulShellRoute.indexedStack(
+        builder: (context, state, navigationShell) {
+          return ResponsiveLayout(
+            phone: PhoneScaffoldWithNavigationbar(
+              navigationShell: navigationShell,
+            ),
+            desktop: DesktopScaffoldWithNavigationbar(
+              navigationShell: navigationShell,
+            ),
+          );
+        },
+        branches: [
+          StatefulShellBranch(
+            routes: [
+              // 首页
+              GoRoute(
+                path: '/',
+                builder: (context, state) => const ArenaView(),
+                routes: [
+                  GoRoute(
+                    path: '/sequential',
+                    builder: (context, state) => SequentialExamView(),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/rank',
+                builder: (context, state) => LeaderBoardView(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/gift',
+                builder: (context, state) => const GiftView(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              // 个人资料页面
+              GoRoute(
+                path: '/profile',
+                builder: (context, state) => const ProfileView(),
+                routes: [
+                  GoRoute(
+                    path: '/settings',
+                    builder: (context, state) =>
+                        const SettingsTemplate(pageTitle: '设置'),
+                  ),
+                  GoRoute(
+                    path: '/license',
+                    builder: (context, state) => const LicenseView(),
+                  ),
+                ],
+              ),
+            ],
           ),
         ],
       ),
-
+      // 普通路由
+      GoRoute(path: '/login', builder: (context, state) => const LoginView()),
       GoRoute(
-        path: '/',
-        builder: (context, state) =>
-            ResponsiveLayout(phone: PhoneLayout(), desktop: DesktopLayout()),
-      ),
-      GoRoute(
-        path: '/profile',
-        builder: (context, state) => const ExampleView(
-          viewTitle: 'Profile',
-          viewDescription: 'This is Profile view.',
-        ),
+        path: '/dashboard',
+        builder: (context, state) => const DashboardView(),
       ),
     ],
   );
 });
+
+class AuthListener extends ChangeNotifier {
+  AuthListener(Ref ref) {
+    // 在这里使用 ref.listen 监听 authStateProvider
+    // 每当 authStateProvider 状态发生变化时，调用 notifyListeners()
+    ref.listen<AsyncValue<bool>>(authStateProvider, (previous, next) {
+      notifyListeners();
+    });
+  }
+}
