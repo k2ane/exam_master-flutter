@@ -6,12 +6,16 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 // ignore: depend_on_referenced_packages
 import 'package:flutter_web_plugins/url_strategy.dart';
+import 'package:hive_ce_flutter/hive_flutter.dart';
 
-void main() {
+void main() async {
   // 消除在浏览器地址栏中显示#
   usePathUrlStrategy();
   // 引擎初始化
   WidgetsFlutterBinding.ensureInitialized();
+  // 初始化存储引擎
+  await Hive.initFlutter();
+  await Hive.openBox('quiz');
   // 全面屏
   // 铺满整个屏幕
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);

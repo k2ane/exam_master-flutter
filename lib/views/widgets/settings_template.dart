@@ -3,7 +3,6 @@ import 'package:exam_master_flutter/views/widgets/profile_setting_card_widget.da
 import 'package:exam_master_flutter/views/widgets/settings_edit_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 class SettingsTemplate extends ConsumerWidget {
   final String pageTitle;

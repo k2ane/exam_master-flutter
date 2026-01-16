@@ -18,18 +18,6 @@ class _ProfileView extends ConsumerState<ProfileView> {
         title: Text('个人资料'),
         centerTitle: false,
         actionsPadding: EdgeInsets.symmetric(horizontal: 16),
-        actions: [
-          IconButton.filled(
-            onPressed: () {
-              ScaffoldMessenger.of(context).clearSnackBars();
-              ScaffoldMessenger.of(
-                context,
-              ).showSnackBar(SnackBar(content: Text('功能暂未提供')));
-            },
-            icon: Icon(Icons.palette_outlined),
-            color: Theme.of(context).colorScheme.onPrimary,
-          ),
-        ],
       ),
       body: ListView(
         padding: EdgeInsets.all(16.0),

@@ -19,7 +19,6 @@ class SecureStorageProvider {
   static const String _userRole = 'user_role'; // 用户角色
 
   // 暴露方法给全局
-
   // 存储用户角色
   Future<void> setUserRole(String role) async {
     await _storage.write(key: _userRole, value: role);

@@ -1,5 +1,4 @@
 import 'package:exam_master_flutter/providers/auth_state_provider.dart';
-import 'package:exam_master_flutter/providers/http_cilent_provider.dart';
 import 'package:exam_master_flutter/providers/secure_storage_provider.dart';
 import 'package:exam_master_flutter/respositorys/auth_repository.dart';
 import 'package:exam_master_flutter/views/widgets/navigationbar_item.dart';
@@ -35,29 +34,29 @@ class _PhoneScaffoldWithNavigationbar
             value,
             initialLocation: value == widget.navigationShell.currentIndex,
           );
-          try {
-            final token = await storageP.getToken();
-            final response = await authRP.checkLoginState(token as String);
-            if (response.status != 'success') {
-              authState.logout();
-            } else {
-              authState.checkLoginState(
-                token,
-                response.content['email'],
-                response.content['id'],
-                response.content['name'],
-                response.content['role'],
-              );
-            }
-          } catch (e) {
-            authState.logout();
-            if (context.mounted) {
-              ScaffoldMessenger.of(context).clearSnackBars();
-              ScaffoldMessenger.of(
-                context,
-              ).showSnackBar(SnackBar(content: Text('错误: $e')));
-            }
-          }
+          // try {
+          //   final token = await storageP.getToken();
+          //   final response = await authRP.checkLoginState(token as String);
+          //   if (response.status != 'success') {
+          //     authState.logout();
+          //   } else {
+          //     authState.checkLoginState(
+          //       token,
+          //       response.content['email'],
+          //       response.content['id'],
+          //       response.content['name'],
+          //       response.content['role'],
+          //     );
+          //   }
+          // } catch (e) {
+          //   authState.logout();
+          //   if (context.mounted) {
+          //     ScaffoldMessenger.of(context).clearSnackBars();
+          //     ScaffoldMessenger.of(
+          //       context,
+          //     ).showSnackBar(SnackBar(content: Text('错误: $e')));
+          //   }
+          // }
         },
         destinations: items.map((items) {
           return NavigationDestination(

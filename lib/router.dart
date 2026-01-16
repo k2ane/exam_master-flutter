@@ -1,15 +1,14 @@
 import 'package:exam_master_flutter/providers/auth_state_provider.dart';
-import 'package:exam_master_flutter/providers/http_cilent_provider.dart';
-import 'package:exam_master_flutter/providers/secure_storage_provider.dart';
-import 'package:exam_master_flutter/respositorys/auth_repository.dart';
 import 'package:exam_master_flutter/views/arena_view.dart';
 import 'package:exam_master_flutter/views/dashboard_view.dart';
+import 'package:exam_master_flutter/views/exam/exam_example_view.dart';
 import 'package:exam_master_flutter/views/exam/sequential_exam_view.dart';
 import 'package:exam_master_flutter/views/auth/login_view.dart';
 import 'package:exam_master_flutter/views/gift_view.dart';
 import 'package:exam_master_flutter/views/leader_board_view.dart';
 import 'package:exam_master_flutter/views/license_view.dart';
 import 'package:exam_master_flutter/views/profile_view.dart';
+import 'package:exam_master_flutter/views/splash/splash_view.dart';
 import 'package:exam_master_flutter/views/widgets/desktop_scaffold_with_navigationbar.dart';
 import 'package:exam_master_flutter/views/widgets/responsive_layout.dart';
 import 'package:exam_master_flutter/views/widgets/phone_scaffold_with_navigationbar.dart';
@@ -22,7 +21,7 @@ final routerProvider = Provider<GoRouter>((ref) {
   final authNotifier = AuthListener(ref);
   return GoRouter(
     debugLogDiagnostics: true, // 调试模式下显示路由状态
-    initialLocation: '/', // 默认路由页面
+    initialLocation: '/splash', // 默认路由页面
     refreshListenable: authNotifier,
     redirect: (context, state) {
       // 获取全局登陆状态
@@ -31,8 +30,8 @@ final routerProvider = Provider<GoRouter>((ref) {
       if (authState.hasError) return '/login';
       final bool isLoggedIn = authState.value == true;
       final bool isLogginIn = state.matchedLocation == '/login';
-
-      if (!isLoggedIn && !isLogginIn) {
+      final bool isInSplash = state.matchedLocation == '/splash';
+      if (!isLoggedIn && !isLogginIn && !isInSplash) {
         return '/login';
       }
 
@@ -40,6 +39,9 @@ final routerProvider = Provider<GoRouter>((ref) {
         return '/';
       }
 
+      if (isInSplash) {
+        return null;
+      }
       return null;
     },
     // 3. 定义路由表
@@ -111,10 +113,15 @@ final routerProvider = Provider<GoRouter>((ref) {
         ],
       ),
       // 普通路由
+      GoRoute(path: '/splash', builder: (context, state) => const SplashView()),
       GoRoute(path: '/login', builder: (context, state) => const LoginView()),
       GoRoute(
         path: '/dashboard',
         builder: (context, state) => const DashboardView(),
+      ),
+      GoRoute(
+        path: '/exam',
+        builder: (context, state) => const ExamExampleView(),
       ),
     ],
   );
