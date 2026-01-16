@@ -1,7 +1,7 @@
 import 'package:exam_master_flutter/providers/auth_state_provider.dart';
 import 'package:exam_master_flutter/views/arena_view.dart';
 import 'package:exam_master_flutter/views/dashboard_view.dart';
-import 'package:exam_master_flutter/views/exam/exam_example_view.dart';
+import 'package:exam_master_flutter/views/exam/exam_example_demo_view.dart';
 import 'package:exam_master_flutter/views/exam/sequential_exam_view.dart';
 import 'package:exam_master_flutter/views/auth/login_view.dart';
 import 'package:exam_master_flutter/views/gift_view.dart';
@@ -121,7 +121,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         path: '/exam',
-        builder: (context, state) => const ExamExampleView(),
+        builder: (context, state) => const ExamExampleDemoView(),
       ),
     ],
   );

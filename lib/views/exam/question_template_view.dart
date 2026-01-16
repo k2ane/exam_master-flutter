@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hive_ce_flutter/hive_flutter.dart';
 
 class QuestionTemplateView extends ConsumerStatefulWidget {
   final String question;
@@ -28,12 +27,6 @@ class _QuestionTemplateView extends ConsumerState<QuestionTemplateView> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(height: 12.0),
-        ClipRRect(
-          borderRadius: BorderRadius.circular(30),
-          child: LinearProgressIndicator(value: 0.1),
-        ),
-        SizedBox(height: 32.0),
         Text(widget.question, style: TextStyle().copyWith(fontSize: 24.0)),
         SizedBox(height: 16),
         Text(widget.question_description ?? '暂无题目描述'),

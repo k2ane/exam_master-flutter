@@ -22,7 +22,7 @@ class _SplashView extends ConsumerState<SplashView> {
 
   Future<void> _checkLoginState(BuildContext context) async {
     await Future.wait([
-      Future.delayed(const Duration(seconds: 3)),
+      Future.delayed(const Duration(seconds: 1)),
       initCheckAuth(),
     ]);
   }
@@ -35,7 +35,7 @@ class _SplashView extends ConsumerState<SplashView> {
       try {
         final response = await ref
             .read(authRepositoryProvider)
-            .checkLoginState(token as String);
+            .checkLoginState(token);
         if (response.status != 'success') {
           debugPrint('身份验证错误');
           await ref.read(authStateProvider.notifier).logout();
@@ -60,8 +60,11 @@ class _SplashView extends ConsumerState<SplashView> {
           }
         }
       } catch (e) {
+        print(e);
+        if (e.toString() == '未授权或登录过期') {
+          await ref.read(authStateProvider.notifier).logout();
+        }
         debugPrint('身份验证异常: $e');
-        // await ref.read(authStateProvider.notifier).logout();
         if (mounted) {
           context.go('/');
           ScaffoldMessenger.of(context).clearSnackBars();

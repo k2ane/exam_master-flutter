@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:exam_master_flutter/providers/auth_state_provider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -12,7 +13,7 @@ final dioProvider = Provider<Dio>((ref) {
   // Dio配置
   final options = BaseOptions(
     // 特殊配置安卓模拟器访问本地localhost地址 10.0.2.2
-    baseUrl: 'http://192.168.0.142:3000/api/v1',
+    baseUrl: 'http://192.168.2.223:3000/api/v1',
     connectTimeout: Duration(seconds: 10),
     receiveTimeout: Duration(seconds: 10),
     contentType: Headers.jsonContentType,

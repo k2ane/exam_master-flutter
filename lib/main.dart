@@ -43,15 +43,22 @@ class ExamApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // 配置easyload组件
+    EasyLoading.instance.maskType = EasyLoadingMaskType.black;
+    EasyLoading.instance.userInteractions = false;
+    // 定义全局色彩 - 亮色
     final lightColorSchema = ColorScheme.fromSeed(
       seedColor: Colors.green, // 种子颜色
       brightness: Brightness.light,
     );
+    // 定义全局色彩 - 暗色
     final darkColorSchema = ColorScheme.fromSeed(
       seedColor: Colors.green,
       brightness: Brightness.dark,
     );
+    // 获取路由配置
     final goRouter = ref.watch(routerProvider);
+    // Material App 配置
     return MaterialApp.router(
       // showPerformanceOverlay: true,
       title: '海邦问答',

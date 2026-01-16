@@ -27,4 +27,15 @@ class Question {
       correctAnswer: data['correct_answer']?.toString() ?? "",
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'question': question,
+      'description': description,
+      'tags': tags,
+      'answers': answers,
+      'point': point,
+      'correctAnswer': correctAnswer,
+    };
+  }
 }
